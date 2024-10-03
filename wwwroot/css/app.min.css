@@ -1093,10 +1093,6 @@ input:checked + .toggle-bg {
   border-width: 0;
 }
 
-.pointer-events-none {
-  pointer-events: none;
-}
-
 .visible {
   visibility: visible;
 }
@@ -1127,11 +1123,6 @@ input:checked + .toggle-bg {
 
 .inset-0 {
   inset: 0px;
-}
-
-.inset-y-0 {
-  top: 0px;
-  bottom: 0px;
 }
 
 .bottom-0 {
@@ -1219,14 +1210,6 @@ input:checked + .toggle-bg {
 
 .mr-2 {
   margin-right: 0.5rem;
-}
-
-.mr-3 {
-  margin-right: 0.75rem;
-}
-
-.mr-4 {
-  margin-right: 1rem;
 }
 
 .mt-2 {
@@ -1512,10 +1495,6 @@ input:checked + .toggle-bg {
   border-color: rgb(243 244 246 / var(--tw-divide-opacity));
 }
 
-.self-center {
-  align-self: center;
-}
-
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1527,10 +1506,6 @@ input:checked + .toggle-bg {
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.whitespace-nowrap {
   white-space: nowrap;
 }
 
@@ -1720,10 +1695,6 @@ input:checked + .toggle-bg {
   padding-bottom: 1.25rem;
 }
 
-.pl-10 {
-  padding-left: 2.5rem;
-}
-
 .pl-3 {
   padding-left: 0.75rem;
 }
@@ -1738,11 +1709,6 @@ input:checked + .toggle-bg {
 
 .text-center {
   text-align: center;
-}
-
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
 }
 
 .text-32 {
@@ -2043,16 +2009,6 @@ input:checked + .toggle-bg {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.dark\:placeholder-gray-400:is(.dark *)::-moz-placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
-}
-
-.dark\:placeholder-gray-400:is(.dark *)::placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
-}
-
 .dark\:hover\:bg-gray-600:hover:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
@@ -2111,20 +2067,8 @@ input:checked + .toggle-bg {
     margin-right: 0px;
   }
 
-  .md\:block {
-    display: block;
-  }
-
   .md\:hidden {
     display: none;
-  }
-
-  .md\:w-64 {
-    width: 16rem;
-  }
-
-  .md\:w-96 {
-    width: 24rem;
   }
 
   .md\:translate-x-0 {
@@ -2134,10 +2078,6 @@ input:checked + .toggle-bg {
 
   .md\:flex-row {
     flex-direction: row;
-  }
-
-  .md\:pl-2 {
-    padding-left: 0.5rem;
   }
 }
 
