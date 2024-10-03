@@ -1,0 +1,21 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+<span class="@Class">
+    @((MarkupString)IconString)
+</span>
+
+@code {
+    [Parameter][Required] public Icon Icon { get; set; }
+    private string IconString { get; set; }
+    [Parameter] public string Class { get; set; } = "lucide";
+    [Parameter] public int Width { get; set; } = 24;
+    [Parameter] public int Heigth { get; set; } = 24;
+
+    protected override void OnInitialized()
+    {
+        IconString = Icon.Svg;
+        IconString = IconString.Replace("width=\"24\"", @"width=" + Width + "");
+        IconString= IconString.Replace("height=\"24\"", @"height=" + Heigth + "");
+        IconString= IconString.Replace("lucide", Class);
+    }
+}
