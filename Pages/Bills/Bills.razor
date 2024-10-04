@@ -2,5 +2,12 @@
 <h3>Bills</h3>
 
 @code {
+    [Inject] IBillsService billsService { get; set; }
+    private IEnumerable<Bill> _bills;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _bills = await billsService.GetAsync();
+    }
 
 }

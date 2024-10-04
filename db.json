@@ -2,5 +2,6 @@
     "transactions": [],
     "budgets": [],
     "categories": [],
-    "users": []
+    "users": [],
+    "bills": []
 }
