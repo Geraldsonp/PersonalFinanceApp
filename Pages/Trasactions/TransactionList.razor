@@ -1,0 +1,27 @@
+<div>
+    <table class="w-full text-preset-5 text-grey-500">
+        <thead>
+            <tr class="text-left">
+                <th>Recipient/Sender</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th class="text-right">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Transactions)
+            {
+                <tr>
+                    <td>@transaction.RecipientOrSender</td>
+                    <td>@transaction.Category</td>
+                    <td>@transaction.Date</td>
+                    <td class="text-right">@transaction.Amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter] public IEnumerable<Transaction> Transactions { get; set; } = new List<Transaction>();
+}

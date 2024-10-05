@@ -3,3 +3,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.text-preset-5 {
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0;
+}

@@ -1,5 +1,13 @@
 {
-    "transactions": [],
+    "transactions": [
+        {
+            "recipientOrSender": "John Doe",
+            "type": "Income",
+            "amount": 1000,
+            "date": "2022-01-01",
+            "category": "Food"
+        }
+    ],
     "budgets": [],
     "categories": [],
     "users": [],

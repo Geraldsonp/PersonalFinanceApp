@@ -1,2 +1,12 @@
 @page "/transactions"
 
+<TransactionList Transactions="@TransactionsList"></TransactionList>
+@code {
+    public IEnumerable<Transaction> TransactionsList { get; set; } = new List<Transaction>();
+    [Inject] ITransactionService? transactionService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        TransactionsList = await transactionService?.GetAsync();
+    }
+}
