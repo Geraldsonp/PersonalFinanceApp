@@ -2,10 +2,163 @@
     "transactions": [
         {
             "recipientOrSender": "John Doe",
+            "image": "https://i.pravatar.cc/301",
+            "type": "Income",
+            "amount": 2000,
+            "date": "2024-08-15",
+            "category": "Salary"
+        },
+        {
+            "recipientOrSender": "Jane Doe",
+            "image": "https://i.pravatar.cc/302",
+            "type": "Expense",
+            "amount": -150.50,
+            "date": "2024-08-16",
+            "category": "Groceries"
+        },
+        {
+            "recipientOrSender": "John Smith",
+            "image": "https://i.pravatar.cc/303",
+            "type": "Income",
+            "amount": 500,
+            "date": "2024-08-17",
+            "category": "Freelance"
+        },
+        {
+            "recipientOrSender": "Electricity Company",
+            "image": "https://i.pravatar.cc/304",
+            "type": "Expense",
+            "amount": -80.25,
+            "date": "2024-08-18",
+            "category": "Utilities"
+        },
+        {
+            "recipientOrSender": "David Lee",
+            "image": "https://i.pravatar.cc/305",
+            "type": "Expense",
+            "amount": -35.00,
+            "date": "2024-08-19",
+            "category": "Transportation"
+        },
+        {
+            "recipientOrSender": "Cinema City",
+            "image": "https://i.pravatar.cc/306",
+            "type": "Expense",
+            "amount": -25.00,
+            "date": "2024-08-20",
+            "category": "Entertainment"
+        },
+        {
+            "recipientOrSender": "Emily Chen",
+            "image": "https://i.pravatar.cc/307",
+            "type": "Expense",
+            "amount": -120.75,
+            "date": "2024-08-21",
+            "category": "Clothing"
+        },
+        {
+            "recipientOrSender": "Health Insurance Co.",
+            "image": "https://i.pravatar.cc/308",
+            "type": "Expense",
+            "amount": -200.00,
+            "date": "2024-08-22",
+            "category": "Insurance"
+        },
+        {
+            "recipientOrSender": "Kevin White",
+            "image": "https://i.pravatar.cc/309",
             "type": "Income",
             "amount": 1000,
-            "date": "2022-01-01",
-            "category": "Food"
+            "date": "2024-08-23",
+            "category": "Investment"
+        },
+        {
+            "recipientOrSender": "Olivia Martin",
+            "image": "https://i.pravatar.cc/310",
+            "type": "Expense",
+            "amount": -50.00,
+            "date": "2024-08-24",
+            "category": "Dining Out"
+        },
+        {
+            "recipientOrSender": "Gym Membership",
+            "image": "https://i.pravatar.cc/311",
+            "type": "Expense",
+            "amount": -60.00,
+            "date": "2024-08-25",
+            "category": "Health"
+        },
+        {
+            "recipientOrSender": "Bookstore",
+            "image": "https://i.pravatar.cc/312",
+            "type": "Expense",
+            "amount": -45.99,
+            "date": "2024-08-26",
+            "category": "Education"
+        },
+        {
+            "recipientOrSender": "Rental Income",
+            "image": "https://i.pravatar.cc/313",
+            "type": "Income",
+            "amount": 800,
+            "date": "2024-08-27",
+            "category": "Real Estate"
+        },
+        {
+            "recipientOrSender": "Car Repair Shop",
+            "image": "https://i.pravatar.cc/314",
+            "type": "Expense",
+            "amount": -250.00,
+            "date": "2024-08-28",
+            "category": "Auto"
+        },
+        {
+            "recipientOrSender": "Dividend Payment",
+            "image": "https://i.pravatar.cc/315",
+            "type": "Income",
+            "amount": 75.50,
+            "date": "2024-08-29",
+            "category": "Investment"
+        },
+        {
+            "recipientOrSender": "Home Improvement Store",
+            "image": "https://i.pravatar.cc/316",
+            "type": "Expense",
+            "amount": -180.25,
+            "date": "2024-08-30",
+            "category": "Home"
+        },
+        {
+            "recipientOrSender": "Paypal Transfer",
+            "image": "https://i.pravatar.cc/317",
+            "type": "Income",
+            "amount": 250,
+            "date": "2024-08-31",
+            "category": "Transfer"
+        },
+        {
+            "recipientOrSender": "Charitable Donation",
+            "image": "https://i.pravatar.cc/318",
+            "type": "Expense",
+            "amount": -100.00,
+            "date": "2024-09-01",
+            "category": "Charity"
+        },
+        {
+            "recipientOrSender": "Spotify Subscription",
+            "image": "https://i.pravatar.cc/319",
+            "type": "Expense",
+            "amount": -9.99,
+            "date": "2024-09-02",
+            "category": "Entertainment"
+        },
+        {
+            "recipientOrSender": "Freelance Client",
+            "image": "https://i.pravatar.cc/320",
+            "type": "Income",
+            "amount": 450,
+            "date": "2024-09-03",
+            "category": "Freelance"
         }
     ],
     "budgets": [],

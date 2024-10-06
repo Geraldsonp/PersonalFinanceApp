@@ -1,11 +1,10 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime Js
 
-<div class="antialiased bg-gray-50 dark:bg-gray-900 flex flex-col md:flex-row">
+<div class="antialiased bg-gray-50 dark:bg-gray-900 flex flex-col md:flex-row h-screen">
     <SideBar></SideBar>
-    <div class="w-full">
-        <TopNav></TopNav>
-        <main class="p-4  h-auto pt-20">
+    <div class="w-full h-svh bg-beige-100">
+        <main class="px-8  py-6 ">
             @Body
         </main>
     </div>
