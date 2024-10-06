@@ -1947,6 +1947,12 @@ input:checked + .toggle-bg{
   transition-duration: 150ms;
 }
 
+.transition-all{
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .transition-opacity{
   transition-property: opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1957,6 +1963,10 @@ input:checked + .toggle-bg{
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+.duration-500{
+  transition-duration: 500ms;
 }
 
 .ease-out{
@@ -1998,13 +2008,8 @@ body {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
   }
-  tbody>tr:last-child {
-    td{
-      border-bottom-width: 0px;
-    }
-    td{
-      padding-bottom: 0px;
-    }
+  tbody>tr:last-child{
+    border-style: none;
   }
 }
 
@@ -2226,6 +2231,14 @@ body {
 
   .md\:mr-0{
     margin-right: 0px;
+  }
+
+  .md\:block{
+    display: block;
+  }
+
+  .md\:flex{
+    display: flex;
   }
 
   .md\:hidden{

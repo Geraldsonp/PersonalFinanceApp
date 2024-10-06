@@ -2,7 +2,7 @@
     <ul class="flex justify-between items-center space-x-2">
         <li>
             <button class="px-3 flex gap-3  border border-gray-300 py-1 rounded-md bg-white hover:bg-gray-300 disabled:opacity-50" @onclick="() => ChangePage(CurrentPage - 1)" disabled="@(CurrentPage == 1)" aria-label="Previous page">
-                <IconComponent Icon="Icons.BigArrowLeft" Class="text-gray-500"></IconComponent>
+                <IconComponent Icon="Icons.SmallArrowLeft" Class="text-gray-500"></IconComponent>
                 Prev 
             </button>
         </li>
@@ -27,7 +27,7 @@
 
         <li>
             <button class="px-3 flex gap-3  border border-gray-300 py-1 rounded-md bg-white hover:bg-gray-300 disabled:opacity-50" @onclick="() => ChangePage(CurrentPage + 1)" disabled="@(CurrentPage == TotalPages)" aria-label="Next page">
-                Next <IconComponent Icon="Icons.BigArrowRight" Class="text-gray-500"></IconComponent>
+                Next <IconComponent Icon="Icons.SmallArrowRight" Class="text-gray-500"></IconComponent>
             </button>
         </li>
     </ul>
