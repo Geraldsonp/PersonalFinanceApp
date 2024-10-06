@@ -41,9 +41,7 @@ body {
     }
 
     tbody>tr:last-child {
-        td{
-            @apply pb-0 border-b-0
-        }
+        @apply border-none
     }
 
 }
