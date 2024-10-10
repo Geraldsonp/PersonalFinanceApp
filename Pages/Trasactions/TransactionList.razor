@@ -1,15 +1,21 @@
 <div class="container mx-auto transition-all duration-500">
     <div class="flex justify-between items-center mb-3">
         <div class="relative">
-            <input type="text" placeholder="Search transaction" class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" @bind="searchTerm" @bind:event="oninput" />
-            <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            <input type="text" placeholder="Search transaction"
+                class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                @bind="searchTerm" @bind:event="oninput" />
+            <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
         </div>
         <div class="md:flex space-x-3 items-center hidden ">
             <div class="flex items-center">
                 <label class="text-preset-5" for="sortBy">Sort by:</label>
-                <select id="sortBy" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" @bind="sortBy">
+                <select id="sortBy"
+                    class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    @bind="sortBy">
                     <option value="Latest">Latest</option>
                     <option value="Oldest">Oldest</option>
                     <option value="Highest">Highest</option>
@@ -18,7 +24,8 @@
             </div>
             <div class="hidden md:block">
                 <label class="text-preset-5" for="categoryFilter">Category:</label>
-                <select class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" @bind="categoryFilter">
+                <select class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    @bind="categoryFilter">
                     <option value="">All Transactions</option>
                     @foreach (var category in categories)
                     {
@@ -31,7 +38,7 @@
     </div>
 
     <table class="w-full text-gray-500 btable text-preset-5 transition-transform duration-500">
-        <thead>
+        <thead class="hidden sm:table-header-group">
             <tr class="border-b ">
                 <th>Recipient / Sender</th>
                 <th>Category</th>
@@ -42,9 +49,10 @@
         <tbody>
             @foreach (var transaction in filteredTransactions)
             {
-                <tr class="border-b hover:bg-gray-50 hover:cursor-pointer">
+                <tr class="hidden sm:table-row border-b hover:bg-gray-50 hover:cursor-pointer">
                     <td class="flex items-center text-preset-4-bold text-gray-900">
-                        <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
+                        <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender"
+                            class="w-10 h-10 rounded-full mr-3" />
                         <span>@transaction.RecipientOrSender</span>
                     </td>
                     <td>@transaction.Category</td>
@@ -53,12 +61,29 @@
                         @(transaction.Amount > 0 ? "+" : "-")$@Math.Abs(transaction.Amount).ToString("F2")
                     </td>
                 </tr>
+                <tr class=" sm:hidden border-b hover:bg-gray-50 hover:cursor-pointer">
+                    <td class="flex justify-between">
+                        <div class="flex items-center">
+                            <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender"
+                                class="w-10 h-10 rounded-full mr-3" />
+                            <div class="flex flex-col">
+                                <span class="text-preset-4-bold text-gray-900">@transaction.RecipientOrSender</span>
+                                <span>@transaction.Category</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-preset-4-bold @(transaction.Amount > 0 ? "text-green" : "text-gray-900")">@(transaction.Amount > 0 ? "+" : "-")$@Math.Abs(transaction.Amount).ToString("F2")</span>
+                            <span>@transaction.Date.ToString("dd MMM yyyy")</span>
+                        </div>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 
     <div class="mt-4 ">
-        <Pagger CurrentPage="@currentPage" TotalItems="@totalPages" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage" PaginationRange="4"></Pagger>
+        <Pagger CurrentPage="@currentPage" TotalItems="@totalPages" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage"
+            PaginationRange="4"></Pagger>
     </div>
 </div>
 
@@ -88,7 +113,8 @@
 
     private List<Transaction> filteredTransactions =>
     Transactions
-    .Where(t => string.IsNullOrEmpty(searchTerm) || t.RecipientOrSender.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+    .Where(t => string.IsNullOrEmpty(searchTerm) || t.RecipientOrSender.Contains(searchTerm,
+    StringComparison.OrdinalIgnoreCase))
     .Where(t => string.IsNullOrEmpty(categoryFilter) || t.Category == categoryFilter)
     .Skip((currentPage - 1) * pageSize)
     .Take(pageSize)

@@ -2224,6 +2224,24 @@ body {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
+@media (min-width: 640px){
+  .sm\:table-cell{
+    display: table-cell;
+  }
+
+  .sm\:table-header-group{
+    display: table-header-group;
+  }
+
+  .sm\:table-row{
+    display: table-row;
+  }
+
+  .sm\:hidden{
+    display: none;
+  }
+}
+
 @media (min-width: 768px){
   .md\:relative{
     position: relative;
