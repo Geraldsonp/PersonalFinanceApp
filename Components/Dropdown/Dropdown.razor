@@ -7,7 +7,7 @@
     <div class="relative inline-block w-full">
         <button @onclick="ToggleDropdown" class=" md:bg-white border md:border-gray-300 hover:border-gray-500 px-2 md:px-4 py-2 rounded md:shadow leading-tight focus:outline-none focus:shadow-outline text-sm md:min-w-36">
             <div class="hidden md:flex items-center justify-between">
-                <span class="truncate mr-2 hidden md:block">@(SelectedOption?.Label ?? "Select")</span>
+                <span class="truncate  mr-2 hidden md:block">@(SelectedOption?.Label ?? "Select")</span>
                 @if (SelectedOption == null)
                 {
                     <svg class="flex-shrink-0 fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -34,7 +34,7 @@
             <div class="absolute z-10 right-0 w-full mt-1 bg-white border border-gray-100 rounded shadow-lg" style="min-width: 172px;">
                 @foreach (var option in Options)
                 {
-                    <button @onclick="() => SelectOption(option)" class="block w-full border-b border-gray-100 text-left px-4 py-2 hover:bg-gray-100 text-sm @(option.Value == SelectedValue ? "bg-gray-100" : "")" style="min-width: 172px;">
+                    <button @onclick="() => SelectOption(option)" class="block w-full border-b border-gray-100 text-left px-4 py-2 hover:bg-gray-100 text-sm @(option.Value == SelectedValue ? "bg-gray-100 font-bold" : "")" style="min-width: 172px;">
                         <span class="truncate block">@option.Label</span>
                     </button>
                 }
@@ -70,7 +70,6 @@
     {
         SelectedValue = option.Value;
         IsOpen = false;
-        Console.WriteLine(SelectedValue);
         await SelectedValueChanged.InvokeAsync(SelectedValue);
     }
 

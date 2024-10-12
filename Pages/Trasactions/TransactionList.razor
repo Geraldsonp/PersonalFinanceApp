@@ -3,6 +3,7 @@
 <div class="container md:mx-auto transition-all duration-500">
     <div class="flex justify-between items-center mb-3 gap-4">
         <InputField Placeholder="Search" Icon="Icons.Gliph" @bind-Value="searchTerm"></InputField>
+        <p>@sortBy</p>
         <div class="flex gap-2 md:gap-4 items-center ">
             <Dropdown Label="Sort By:" Options="sortOptions" @bind-SelectedValue="sortBy" Icon="Icons.UpAndDownArrow"></Dropdown>
             <Dropdown Label="Category:" Options="categoryOptions" @bind-SelectedValue="categoryFilter" Icon="Icons.Filter"></Dropdown>
@@ -60,30 +61,30 @@
     [Parameter] public IList<Transaction> Transactions { get; set; } = new List<Transaction>();
 
     private string searchTerm = "";
-    private string sortBy = "Latest";
+    private string sortBy = "latest";
     private string categoryFilter = "";
     private int currentPage = 1;
     private int pageSize = 9;
     private int totalPages => (int)Math.Ceiling((double)Transactions.Count / pageSize);
     private List<DropdownOption> sortOptions = new List<DropdownOption>
-{
-new DropdownOption("latest", "Latest"),
-new DropdownOption("oldest", "Oldest"),
-new DropdownOption("a-to-z", "A to Z"),
-new DropdownOption("z-to-a", "Z to A"),
-new DropdownOption("highest", "Highest"),
-new DropdownOption("lowest", "Lowest")
-};
+        {
+        new DropdownOption("latest", "Latest"),
+        new DropdownOption("oldest", "Oldest"),
+        new DropdownOption("a-to-z", "A to Z"),
+        new DropdownOption("z-to-a", "Z to A"),
+        new DropdownOption("highest", "Highest"),
+        new DropdownOption("lowest", "Lowest")
+        };
     private List<DropdownOption> categoryOptions = new List<DropdownOption>
-{
-new DropdownOption("", "All Transactions"),
-new DropdownOption("entertainment", "Entertainment"),
-new DropdownOption("bills", "Bills"),
-new DropdownOption("groceries", "Groceries"),
-new DropdownOption("dining-out", "Dining Out"),
-new DropdownOption("transportation", "Transportation"),
-new DropdownOption("personal-care", "Personal Care")
-};
+        {
+        new DropdownOption("", "All Transactions"),
+        new DropdownOption("entertainment", "Entertainment"),
+        new DropdownOption("bills", "Bills"),
+        new DropdownOption("groceries", "Groceries"),
+        new DropdownOption("dining-out", "Dining Out"),
+        new DropdownOption("transportation", "Transportation"),
+        new DropdownOption("personal-care", "Personal Care")
+        };
     protected override async Task OnInitializedAsync()
     {
 
@@ -97,14 +98,7 @@ new DropdownOption("personal-care", "Personal Care")
         .ToList();
     }
 
-    private List<Transaction> filteredTransactions =>
-    Transactions
-    .Where(t => string.IsNullOrEmpty(searchTerm) || t.RecipientOrSender.Contains(searchTerm,
-    StringComparison.OrdinalIgnoreCase))
-    .Where(t => string.IsNullOrEmpty(categoryFilter) || t.Category == categoryFilter)
-    .Skip((currentPage - 1) * pageSize)
-    .Take(pageSize)
-    .ToList();
+    private List<Transaction> filteredTransactions => new TransactionFilterAndSorting(Transactions, searchTerm, categoryFilter, sortBy, currentPage, pageSize).Filter().ToList();
 
     private void ChangePage(int pageNumber)
     {
