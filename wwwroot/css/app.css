@@ -37,7 +37,7 @@ body {
 
 
     tbody>tr>td {
-        @apply py-3
+        @apply py-4
     }
 
     tbody>tr:last-child {
@@ -45,3 +45,4 @@ body {
     }
 
 }
+

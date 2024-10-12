@@ -1,43 +1,15 @@
-<div class="container mx-auto transition-all duration-500">
-    <div class="flex justify-between items-center mb-3">
-        <div class="relative">
-            <input type="text" placeholder="Search transaction"
-                class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                @bind="searchTerm" @bind:event="oninput" />
-            <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-        </div>
-        <div class="md:flex space-x-3 items-center hidden ">
-            <div class="flex items-center">
-                <label class="text-preset-5" for="sortBy">Sort by:</label>
-                <select id="sortBy"
-                    class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    @bind="sortBy">
-                    <option value="Latest">Latest</option>
-                    <option value="Oldest">Oldest</option>
-                    <option value="Highest">Highest</option>
-                    <option value="Lowest">Lowest</option>
-                </select>
-            </div>
-            <div class="hidden md:block">
-                <label class="text-preset-5" for="categoryFilter">Category:</label>
-                <select class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    @bind="categoryFilter">
-                    <option value="">All Transactions</option>
-                    @foreach (var category in categories)
-                    {
-                        <option value="@category">@category</option>
-                    }
-                </select>
-            </div>
-
+@using PersonalFinanceApp.Components.Dropdown
+@using PersonalFinanceApp.Components.InputField
+<div class="container md:mx-auto transition-all duration-500">
+    <div class="flex justify-between items-center mb-3 gap-4">
+        <InputField Placeholder="Search" Icon="Icons.Gliph" @bind-Value="searchTerm"></InputField>
+        <div class="flex gap-2 md:gap-4 items-center ">
+            <Dropdown Label="Sort By:" Options="sortOptions" @bind-SelectedValue="sortBy" Icon="Icons.UpAndDownArrow"></Dropdown>
+            <Dropdown Label="Category:" Options="categoryOptions" @bind-SelectedValue="categoryFilter" Icon="Icons.Filter"></Dropdown>
         </div>
     </div>
 
-    <table class="w-full text-gray-500 btable text-preset-5 transition-transform duration-500">
+    <table class="w-full text-gray-500 btable text-preset-5 transition-transform duration-500 overflow-x-auto">
         <thead class="hidden sm:table-header-group">
             <tr class="border-b ">
                 <th>Recipient / Sender</th>
@@ -51,8 +23,7 @@
             {
                 <tr class="hidden sm:table-row border-b hover:bg-gray-50 hover:cursor-pointer">
                     <td class="flex items-center text-preset-4-bold text-gray-900">
-                        <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender"
-                            class="w-10 h-10 rounded-full mr-3" />
+                        <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
                         <span>@transaction.RecipientOrSender</span>
                     </td>
                     <td>@transaction.Category</td>
@@ -64,14 +35,13 @@
                 <tr class=" sm:hidden border-b hover:bg-gray-50 hover:cursor-pointer">
                     <td class="flex justify-between">
                         <div class="flex items-center">
-                            <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender"
-                                class="w-10 h-10 rounded-full mr-3" />
-                            <div class="flex flex-col">
+                            <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
+                            <div class="flex flex-col gap-1">
                                 <span class="text-preset-4-bold text-gray-900">@transaction.RecipientOrSender</span>
                                 <span>@transaction.Category</span>
                             </div>
                         </div>
-                        <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
                             <span class="text-preset-4-bold @(transaction.Amount > 0 ? "text-green" : "text-gray-900")">@(transaction.Amount > 0 ? "+" : "-")$@Math.Abs(transaction.Amount).ToString("F2")</span>
                             <span>@transaction.Date.ToString("dd MMM yyyy")</span>
                         </div>
@@ -82,22 +52,38 @@
     </table>
 
     <div class="mt-4 ">
-        <Pagger CurrentPage="@currentPage" TotalItems="@totalPages" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage"
-            PaginationRange="4"></Pagger>
+        <Pagger CurrentPage="@currentPage" TotalItems="@totalPages" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage" PaginationRange="4"></Pagger>
     </div>
 </div>
 
 @code {
     [Parameter] public IList<Transaction> Transactions { get; set; } = new List<Transaction>();
 
-    private List<string> categories = new List<string>();
     private string searchTerm = "";
     private string sortBy = "Latest";
     private string categoryFilter = "";
     private int currentPage = 1;
-    private int pageSize = 10;
+    private int pageSize = 9;
     private int totalPages => (int)Math.Ceiling((double)Transactions.Count / pageSize);
-
+    private List<DropdownOption> sortOptions = new List<DropdownOption>
+{
+new DropdownOption("latest", "Latest"),
+new DropdownOption("oldest", "Oldest"),
+new DropdownOption("a-to-z", "A to Z"),
+new DropdownOption("z-to-a", "Z to A"),
+new DropdownOption("highest", "Highest"),
+new DropdownOption("lowest", "Lowest")
+};
+    private List<DropdownOption> categoryOptions = new List<DropdownOption>
+{
+new DropdownOption("", "All Transactions"),
+new DropdownOption("entertainment", "Entertainment"),
+new DropdownOption("bills", "Bills"),
+new DropdownOption("groceries", "Groceries"),
+new DropdownOption("dining-out", "Dining Out"),
+new DropdownOption("transportation", "Transportation"),
+new DropdownOption("personal-care", "Personal Care")
+};
     protected override async Task OnInitializedAsync()
     {
 
@@ -105,8 +91,8 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        categories = Transactions
-        .Select(t => t.Category)
+        categoryOptions = Transactions
+        .Select(t => new DropdownOption(t.Category, t.Category))
         .Distinct()
         .ToList();
     }

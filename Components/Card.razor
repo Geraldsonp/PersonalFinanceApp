@@ -1,8 +1,28 @@
-<div class="p-8 rounded-md bg-white shadow-lg">
-    @ChildContent
+
+
+ @if (PageTitle != null)
+    {
+        <div class="flex justify-between pb-4">
+            <h1 class="text-32 font-bold">@PageTitle</h1>
+            @if (Actions != null)
+            {
+                <div>
+                    @Actions
+                </div>
+            }
+        </div>
+    }
+<div class="p-6 rounded-md bg-white shadow-lg">
+   
+    @if (ChildContent != null)
+    {
+        @ChildContent
+    }
 </div>
 
-
 @code {
-    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+    [Parameter] public string? PageTitle { get; set; }
 }
