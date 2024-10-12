@@ -1,52 +1,55 @@
 ﻿@using PersonalFinanceApp.Components
 
-<aside class="fixed top-0 left-0 md:relative z-40 min-w-64 h-screen  transition-transform  -translate-x-full bg-gray-900 border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidenav" id="drawer-navigation">
-    <div class="px-500 py-400">
+<aside class=" md:relative z-40 min-w-64 md:min-h-screen rounded-l-none rounded-t-lg  rounded-r-lg  transition-transform  bg-gray-900 border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidenav" id="drawer-navigation">
+    <div class="hidden md:block px-500 py-400">
         <h1 class="text-32 font-bold text-white ">Finance</h1>
     </div>
-    <div class="overflow-y-auto py-5 px-3 h-full  dark:bg-gray-800 ">
-        <ul class="space-y-2">
+    <div class="overflow-y-auto dark:bg-gray-800">
+        <ul class="flex justify-between items-center px-2 md:px-0 md:block">
             <li>
-                <a href="Overview" class="nav-item group">
+                <NavLink href="Overview" class="nav-item group" ActiveClass="active" Match="NavLinkMatch.All">
                     <div class="group-hover:text-green">
                         <IconComponent Icon="Icons.Home"></IconComponent>
                     </div>
                     <span class="ml-3 ">Overview</span>
-                </a>
+                </NavLink>
             </li>
             <li>
-                <a href="Transactions" class="nav-item group">
+                <NavLink href="Transactions" class="nav-item group" ActiveClass="active" Match="NavLinkMatch.All">
                     <div class="group-hover:text-green">
                         <IconComponent Icon="Icons.UpAndDownArrow"></IconComponent>
                     </div>
                     <span class="ml-3">Transactions</span>
-                </a>
+                </NavLink>
             </li>
             <li>
-                <a href="Savings" class="nav-item group">
+                <NavLink href="Savings" class="nav-item group" ActiveClass="active" Match="NavLinkMatch.All">
                     <div class="group-hover:text-green">
                         <IconComponent Icon="Icons.PiggyBank"></IconComponent>
 
                     </div>
                     <span class="ml-3">Savings</span>
-                </a>
+                </NavLink>
             </li>
             <li>
-                <a href="Budget" class="nav-item group">
+                <NavLink href="Budget" class="nav-item group" ActiveClass="active" Match="NavLinkMatch.All">
                     <div class="group-hover:text-green">
                         <IconComponent Icon="Icons.PieChart"></IconComponent>
 
                     </div>
                     <span class="ml-3">Budget</span>
-                </a>
+                </NavLink>
             </li>
             <li>
-                <a href="Bills" class="nav-item group">
-                    <IconComponent Icon="Icons.Bill"></IconComponent>
-                    <span class="ml-3">Bills</span>
-                </a>
-            </li>
+                <NavLink href="Bills" class="nav-item group" ActiveClass="active" Match="NavLinkMatch.All">
+                    <div class="group-hover:text-green">
 
+                        <IconComponent Icon="Icons.Bill"></IconComponent>
+                    </div>
+
+                    <span class="ml-3">Bills</span>
+                </NavLink>
+            </li>
         </ul>
     </div>
     <div class="hidden absolute bottom-0 left-0  justify-center p-4 space-x-4 w-full lg:flex  z-20">

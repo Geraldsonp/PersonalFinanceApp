@@ -1,0 +1,94 @@
+<nav aria-label="Page navigation w-full">
+    <ul class="flex justify-between items-center space-x-2">
+        <li>
+            <button class="px-3 flex gap-3  border border-gray-300 py-1 rounded-md bg-white hover:bg-gray-300 disabled:opacity-50" @onclick="() => ChangePage(CurrentPage - 1)" disabled="@(CurrentPage == 1)" aria-label="Previous page">
+                <IconComponent Icon="Icons.SmallArrowLeft" Class="text-gray-500"></IconComponent>
+                Prev 
+            </button>
+        </li>
+        <div class="flex justify-between items-center space-x-2">
+
+            @foreach (var pageNumber in GetPageNumbers())
+            {
+                if (pageNumber == -1)
+                {
+                    <li class="px-3 py-1">...</li>
+                }
+                else
+                {
+                    <li>
+                        <button class="px-3 border border-gray-300 py-1 rounded-md @(CurrentPage == pageNumber ? "bg-black text-white" : "bg-white hover:bg-gray-300")" @onclick="() => ChangePage(pageNumber)" disabled="@(CurrentPage == pageNumber)" aria-label="@($"Go to page {pageNumber}")" aria-current="@(CurrentPage == pageNumber ? "page" : null)">
+                            @pageNumber
+                        </button>
+                    </li>
+                }
+            }
+        </div>
+
+        <li>
+            <button class="px-3 flex gap-3  border border-gray-300 py-1 rounded-md bg-white hover:bg-gray-300 disabled:opacity-50" @onclick="() => ChangePage(CurrentPage + 1)" disabled="@(CurrentPage == TotalPages)" aria-label="Next page">
+                Next <IconComponent Icon="Icons.SmallArrowRight" Class="text-gray-500"></IconComponent>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+@code {
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter]
+    public int TotalItems { get; set; }
+
+    [Parameter]
+    public int ItemsPerPage { get; set; } = 10;
+
+    [Parameter]
+    public int PaginationRange { get; set; } = 5;
+
+    [Parameter]
+    public EventCallback<int> OnPageChanged { get; set; }
+
+    private int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
+
+    private async Task ChangePage(int pageNumber)
+    {
+        if (pageNumber >= 1 && pageNumber <= TotalPages && pageNumber != CurrentPage)
+        {
+            CurrentPage = pageNumber;
+            await OnPageChanged.InvokeAsync(CurrentPage);
+        }
+    }
+
+    private List<int> GetPageNumbers()
+    {
+        var pageNumbers = new List<int>();
+        int startPage = Math.Max(1, CurrentPage - PaginationRange / 2);
+        int endPage = Math.Min(TotalPages, startPage + PaginationRange - 1);
+
+        if (startPage > 1)
+        {
+            pageNumbers.Add(1);
+            if (startPage > 2)
+            {
+                pageNumbers.Add(-1); // Represents ellipsis
+            }
+        }
+
+        for (int i = startPage; i <= endPage; i++)
+        {
+            pageNumbers.Add(i);
+        }
+
+        if (endPage < TotalPages)
+        {
+            if (endPage < TotalPages - 1)
+            {
+                pageNumbers.Add(-1); // Represents ellipsis
+            }
+            pageNumbers.Add(TotalPages);
+        }
+
+        return pageNumbers;
+    }
+}

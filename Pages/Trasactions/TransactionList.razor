@@ -1,27 +1,113 @@
-<div>
-    <table class="w-full text-preset-5 text-grey-500">
-        <thead>
-            <tr class="text-left">
-                <th>Recipient/Sender</th>
+@using PersonalFinanceApp.Components.Dropdown
+@using PersonalFinanceApp.Components.InputField
+<div class="container md:mx-auto transition-all duration-500">
+    <div class="flex justify-between items-center mb-3 gap-4">
+        <InputField Placeholder="Search" Icon="Icons.Gliph" @bind-Value="searchTerm"></InputField>
+        <div class="flex gap-2 md:gap-4 items-center ">
+            <Dropdown Label="Sort By:" Options="sortOptions" @bind-SelectedValue="sortBy" Icon="Icons.UpAndDownArrow"></Dropdown>
+            <Dropdown Label="Category:" Options="categoryOptions" @bind-SelectedValue="categoryFilter" Icon="Icons.Filter"></Dropdown>
+        </div>
+    </div>
+
+    <table class="w-full text-gray-500 btable text-preset-5 transition-transform duration-500 overflow-x-auto">
+        <thead class="hidden sm:table-header-group">
+            <tr class="border-b ">
+                <th>Recipient / Sender</th>
                 <th>Category</th>
-                <th>Date</th>
-                <th class="text-right">Amount</th>
+                <th>Transaction Date</th>
+                <th>Amount</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var transaction in Transactions)
+            @foreach (var transaction in filteredTransactions)
             {
-                <tr>
-                    <td>@transaction.RecipientOrSender</td>
+                <tr class="hidden sm:table-row border-b hover:bg-gray-50 hover:cursor-pointer">
+                    <td class="flex items-center text-preset-4-bold text-gray-900">
+                        <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
+                        <span>@transaction.RecipientOrSender</span>
+                    </td>
                     <td>@transaction.Category</td>
-                    <td>@transaction.Date</td>
-                    <td class="text-right">@transaction.Amount</td>
+                    <td>@transaction.Date.ToString("dd MMM yyyy")</td>
+                    <td class="text-right font-bold @(transaction.Amount > 0 ? "text-green" : "text-gray-900")">
+                        @(transaction.Amount > 0 ? "+" : "-")$@Math.Abs(transaction.Amount).ToString("F2")
+                    </td>
+                </tr>
+                <tr class=" sm:hidden border-b hover:bg-gray-50 hover:cursor-pointer">
+                    <td class="flex justify-between">
+                        <div class="flex items-center">
+                            <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
+                            <div class="flex flex-col gap-1">
+                                <span class="text-preset-4-bold text-gray-900">@transaction.RecipientOrSender</span>
+                                <span>@transaction.Category</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-preset-4-bold @(transaction.Amount > 0 ? "text-green" : "text-gray-900")">@(transaction.Amount > 0 ? "+" : "-")$@Math.Abs(transaction.Amount).ToString("F2")</span>
+                            <span>@transaction.Date.ToString("dd MMM yyyy")</span>
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <div class="mt-4 ">
+        <Pagger CurrentPage="@currentPage" TotalItems="@totalPages" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage" PaginationRange="4"></Pagger>
+    </div>
 </div>
 
 @code {
-    [Parameter] public IEnumerable<Transaction> Transactions { get; set; } = new List<Transaction>();
+    [Parameter] public IList<Transaction> Transactions { get; set; } = new List<Transaction>();
+
+    private string searchTerm = "";
+    private string sortBy = "Latest";
+    private string categoryFilter = "";
+    private int currentPage = 1;
+    private int pageSize = 9;
+    private int totalPages => (int)Math.Ceiling((double)Transactions.Count / pageSize);
+    private List<DropdownOption> sortOptions = new List<DropdownOption>
+{
+new DropdownOption("latest", "Latest"),
+new DropdownOption("oldest", "Oldest"),
+new DropdownOption("a-to-z", "A to Z"),
+new DropdownOption("z-to-a", "Z to A"),
+new DropdownOption("highest", "Highest"),
+new DropdownOption("lowest", "Lowest")
+};
+    private List<DropdownOption> categoryOptions = new List<DropdownOption>
+{
+new DropdownOption("", "All Transactions"),
+new DropdownOption("entertainment", "Entertainment"),
+new DropdownOption("bills", "Bills"),
+new DropdownOption("groceries", "Groceries"),
+new DropdownOption("dining-out", "Dining Out"),
+new DropdownOption("transportation", "Transportation"),
+new DropdownOption("personal-care", "Personal Care")
+};
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        categoryOptions = Transactions
+        .Select(t => new DropdownOption(t.Category, t.Category))
+        .Distinct()
+        .ToList();
+    }
+
+    private List<Transaction> filteredTransactions =>
+    Transactions
+    .Where(t => string.IsNullOrEmpty(searchTerm) || t.RecipientOrSender.Contains(searchTerm,
+    StringComparison.OrdinalIgnoreCase))
+    .Where(t => string.IsNullOrEmpty(categoryFilter) || t.Category == categoryFilter)
+    .Skip((currentPage - 1) * pageSize)
+    .Take(pageSize)
+    .ToList();
+
+    private void ChangePage(int pageNumber)
+    {
+        currentPage = pageNumber;
+    }
 }
