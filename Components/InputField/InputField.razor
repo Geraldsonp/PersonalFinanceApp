@@ -5,7 +5,7 @@
         {
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">@Prefix</span>
         }
-        <input type="@Type" class="@GetInputClasses()" placeholder="@Placeholder" value="@Value" @onchange="OnValueChanged" @attributes="AdditionalAttributes" />
+        <input type="@Type" class="@GetInputClasses()" placeholder="@Placeholder" @bind:event="oninput" @bind="Value" @bind:after="OnValueChanged" @attributes="AdditionalAttributes" />
         @if (Icon != null)
         {
             <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
@@ -29,9 +29,8 @@
     [Parameter] public string ColorTag { get; set; } = "";
     [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> AdditionalAttributes { get; set; }
 
-    private Task OnValueChanged(ChangeEventArgs e)
+    private Task OnValueChanged()
     {
-        Value = e.Value.ToString();
         return ValueChanged.InvokeAsync(Value);
     }
 

@@ -2,7 +2,7 @@
 @using PersonalFinanceApp.Components.InputField
 <div class="container md:mx-auto transition-all duration-500">
     <div class="flex justify-between items-center mb-3 gap-4">
-        <InputField Placeholder="Search" Icon="Icons.Gliph" @bind-Value="searchTerm"></InputField>
+        <InputField Placeholder="Search" Icon="Icons.Gliph" ValueChanged="HandleSearch"></InputField>
         <p>@sortBy</p>
         <div class="flex gap-2 md:gap-4 items-center ">
             <Dropdown Label="Sort By:" Options="sortOptions" @bind-SelectedValue="sortBy" Icon="Icons.UpAndDownArrow"></Dropdown>
@@ -24,7 +24,7 @@
             {
                 <tr class="hidden sm:table-row border-b hover:bg-gray-50 hover:cursor-pointer">
                     <td class="flex items-center text-preset-4-bold text-gray-900">
-                        <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
+                        <img src="@transaction.Avatar" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
                         <span>@transaction.RecipientOrSender</span>
                     </td>
                     <td>@transaction.Category</td>
@@ -36,7 +36,7 @@
                 <tr class=" sm:hidden border-b hover:bg-gray-50 hover:cursor-pointer">
                     <td class="flex justify-between">
                         <div class="flex items-center">
-                            <img src="https://i.pravatar.cc/300" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
+                            <img src="@transaction.Avatar"  alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
                             <div class="flex flex-col gap-1">
                                 <span class="text-preset-4-bold text-gray-900">@transaction.RecipientOrSender</span>
                                 <span>@transaction.Category</span>
@@ -53,7 +53,7 @@
     </table>
 
     <div class="mt-4 ">
-        <Pagger CurrentPage="@currentPage" TotalItems="@totalPages" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage" PaginationRange="4"></Pagger>
+        <Pagger CurrentPage="@currentPage" TotalItems="@Transactions.Count" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage" PaginationRange="4"></Pagger>
     </div>
 </div>
 
@@ -64,7 +64,7 @@
     private string sortBy = "latest";
     private string categoryFilter = "";
     private int currentPage = 1;
-    private int pageSize = 9;
+    private int pageSize = 5;
     private int totalPages => (int)Math.Ceiling((double)Transactions.Count / pageSize);
     private List<DropdownOption> sortOptions = new List<DropdownOption>
         {
@@ -100,6 +100,11 @@
 
     private List<Transaction> filteredTransactions => new TransactionFilterAndSorting(Transactions, searchTerm, categoryFilter, sortBy, currentPage, pageSize).Filter().ToList();
 
+    private void HandleSearch(string searchTerm)
+    {
+        this.searchTerm = searchTerm;
+        ChangePage(1);
+    }
     private void ChangePage(int pageNumber)
     {
         currentPage = pageNumber;

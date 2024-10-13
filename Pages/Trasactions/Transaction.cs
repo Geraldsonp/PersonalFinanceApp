@@ -4,6 +4,7 @@ namespace PersonalFinanceApp.Pages.Trasactions;
 
 public class Transaction
 {
+    public string Avatar { get; set; }
     public string RecipientOrSender { get; set; }
     public decimal Amount { get; set; }
     public string Category { get; set; }
