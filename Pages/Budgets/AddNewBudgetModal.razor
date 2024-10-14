@@ -1,0 +1,61 @@
+﻿<Modal Title="Add New Budget" IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Size="Modal.ModalSize.Large">
+    <p class="text-gray-500 text-12 mb-4">Choose a category to set a spending budget. These categories can help you monitor spending.</p>
+    <form @onsubmit="HandleSubmit">
+        <div class="mb-4">
+            <label class="block text-gray-500 text-12 font-bold mb-2" for="category">
+                Budget Category
+            </label>
+            <select @bind="newBudget.Category" id="category" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option value="">Select a category</option>
+                @foreach (var category in categories)
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 text-12 font-bold mb-2" for="maxSpend">
+                Maximum Spend
+            </label>
+            <InputField Prefix="$"  required TValue="decimal" @bind-Value="newBudget.Maximum" Type="number" id="maxSpend" Placeholder="$ e.g. 2000" />
+        </div>
+        <div class="mb-4">
+            <BasicDropDown Label="Theme" Options="@themesOptions" @bind-SelectedValue="newBudget.Theme" Variant="DropdownVariant.ColorSelection">
+                
+            </BasicDropDown>
+        </div>
+        <div class="flex items-center justify-between">
+            <Button Type="submit">Submit </Button>
+        </div>
+    </form>
+</Modal>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public EventCallback<Budget> OnSubmit { get; set; }
+    private Budget newBudget = new Budget();
+    private List<string> categories = new List<string> { "Entertainment", "Bills", "Groceries", "Dining Out", "Transportation", "Personal Care" };
+    private List<DropdownOption> themesOptions = new List<DropdownOption>();
+
+    protected override void OnInitialized()
+    {
+        themesOptions = new List<DropdownOption>
+            {
+            new DropdownOption ( "#4CAF50", "Green", "#4CAF50" ),
+            new DropdownOption ( "#FFEB3B", "Yellow", "#FFEB3B" ),
+            new DropdownOption ( "#2196F3", "Cyan","#2196F3" ),
+            new DropdownOption ( "#3F51B5", "Navy","#3F51B5" ),
+            new DropdownOption ( "#F44336", "Red","#F44336" ),
+            new DropdownOption ( "#9C27B0", "Purple","#9C27B0" ),
+            new DropdownOption ( "#009688", "Turquoise","#009688" )
+            };
+    }
+
+    private void HandleSubmit()
+    {
+        // Handle form submission
+        OnSubmit.InvokeAsync(newBudget);
+        IsVisibleChanged.InvokeAsync(false);
+    }
+}    

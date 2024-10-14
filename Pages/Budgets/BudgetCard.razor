@@ -1,0 +1,47 @@
+﻿@using static PersonalFinanceApp.Components.PieChart
+<div class="bg-white rounded-xl shadow-lg p-6 max-w-sm">
+    <div class="flex justify-between items-start mb-6">
+        <PieChart Class="w-32 h-32" Size="w-32 h-32" ShowLegend="false" Data="@GetPieChartData()" />
+        <h2 class="text-xl font-semibold">Spending Summary</h2>
+    </div>
+    <div class="space-y-3">
+        @foreach (var category in SpendingSummary.OrderByDescending(c => c.Spent))
+        {
+            <div class="flex items-center justify-between border-b pb-3 border-grey-100">
+                <div class="flex items-center">
+                    <div class="w-1 h-4 mr-2" style="background-color: @category.Color;"></div>
+                    <span class="text-sm text-gray-700">@category.Category</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm font-semibold mr-2">$@category.Spent.ToString("F2")</span>
+                    <span class="text-xs text-gray-500 ml-2">of $@category.Limit</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public List<SpendingSummary> SpendingSummary { get; set; } = new List<SpendingSummary>();
+
+
+    private List<PieChartItem> GetPieChartData()
+    {
+        return SpendingSummary.Select(c => new PieChartItem
+            {
+                Label = c.Category,
+                Value = (float)c.Spent,
+                Color = c.Color
+            }).ToList().OrderBy(c => c.Value).ToList();
+    }
+    private decimal GetTotalSpent()
+    {
+        return SpendingSummary.Sum(c => c.Spent);
+    }
+
+    private decimal GetTotalLimit()
+    {
+        return SpendingSummary.Sum(c => c.Limit);
+    }
+}

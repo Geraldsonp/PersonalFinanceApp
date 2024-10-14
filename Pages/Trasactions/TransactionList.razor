@@ -2,7 +2,7 @@
 @using PersonalFinanceApp.Components.InputField
 <div class="container md:mx-auto transition-all duration-500">
     <div class="flex justify-between items-center mb-3 gap-4">
-        <InputField Placeholder="Search" Icon="Icons.Gliph" ValueChanged="HandleSearch"></InputField>
+        <InputField TValue="string" Placeholder="Search" Icon="Icons.Gliph" ValueChanged="HandleSearch"></InputField>
         <p>@sortBy</p>
         <div class="flex gap-2 md:gap-4 items-center ">
             <Dropdown Label="Sort By:" Options="sortOptions" @bind-SelectedValue="sortBy" Icon="Icons.UpAndDownArrow"></Dropdown>

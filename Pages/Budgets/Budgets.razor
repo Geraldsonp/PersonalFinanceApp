@@ -1,6 +1,70 @@
 ﻿@page "/Budget"
-<h3>Budgets</h3>
+@using PersonalFinanceApp.Components.Button
+@using PersonalFinanceApp.Pages.Trasactions
+@inject IBudgetService BudgetService
+@inject ITransactionService TransactionService
+
+<Page PageTitle="Budgets">
+    <Actions>
+        <Button @onclick="() => showModal = true">+ Add New Budget</Button>
+    </Actions>
+    <ChildContent>
+        <BudgetCard SpendingSummary="@GetSpendingSummaries()"></BudgetCard>
+    </ChildContent>
+</Page>
+<AddNewBudgetModal OnSubmit="@CreateBudget" IsVisible="showModal" IsVisibleChanged="@((bool visible) => showModal = visible)" />
+
 
 @code {
+    private bool showModal = false;
+    private List<Budget> budgets = new List<Budget>();
 
+    private List<Transaction> transactions = new List<Transaction>();
+    protected override async Task OnInitializedAsync()
+    {
+        var _budgets = await BudgetService.GetAsync();
+        var _transactions = await TransactionService.GetAsync();
+
+        budgets = _budgets.ToList();
+        transactions = _transactions.ToList();
+
+    }
+
+    private async Task CreateBudget(Budget newBudget)
+    {
+        await BudgetService.PostAsync(newBudget);
+        budgets.Add(newBudget);
+    }
+
+    private async Task UpdateBudget(Budget updatedBudget)
+    {
+        await BudgetService.PutAsync(updatedBudget);
+        var index = budgets.FindIndex(b => b.Id == updatedBudget.Id);
+        if (index != -1)
+        {
+            budgets[index] = updatedBudget;
+        }
+    }
+
+    private async Task DeleteBudget(int id)
+    {
+        await BudgetService.DeleteAsync(id);
+        budgets.RemoveAll(b => b.Id == id);
+    }
+
+    private List<SpendingSummary> GetSpendingSummaries()
+    {
+        return budgets
+            .DistinctBy(b => b.Category)
+            .Select(b => new SpendingSummary
+            {
+                Category = b.Category,
+                Limit = b.Maximum,
+                Color = b.Theme,
+                Spent = transactions
+                    .Where(t => t.Category == b.Category && t.Amount < 0)
+                    .Sum(t => t.Amount * -1)
+            })
+            .ToList();
+    }
 }

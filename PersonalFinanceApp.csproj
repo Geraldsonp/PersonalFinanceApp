@@ -15,4 +15,8 @@
     <None Include="wwwroot\css\Layout.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Modal\" />
+  </ItemGroup>
+
 </Project>
