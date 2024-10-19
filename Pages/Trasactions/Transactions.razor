@@ -1,8 +1,10 @@
 @page "/transactions"
 @using PersonalFinanceApp.Components
-<Card PageTitle="Transactions">
-    <TransactionList transactions=@TransactionsList></TransactionList>
-</Card>
+<Page PageTitle="Transactions">
+    <Card>
+        <TransactionList transactions=@TransactionsList></TransactionList>
+    </Card>
+</Page>
 @code {
     public IEnumerable<Transaction> TransactionsList { get; set; } = new List<Transaction>();
     [Inject] ITransactionService? transactionService { get; set; }

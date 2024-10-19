@@ -1,4 +1,5 @@
 ﻿@using System.Linq.Expressions
+@typeparam TValue
 
     <div class="relative">
         @if (!string.IsNullOrEmpty(Prefix))
@@ -21,8 +22,8 @@
 @code {
     [Parameter] public string Type { get; set; } = "text";
     [Parameter] public string Placeholder { get; set; } = "";
-    [Parameter] public string Value { get; set; } = "";
-    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public TValue Value { get; set; } = default(TValue);
+    [Parameter] public EventCallback<TValue> ValueChanged { get; set; }
     [Parameter] public string HelperText { get; set; } = "";
     [Parameter] public string Prefix { get; set; } = "";
     [Parameter] public Icon Icon { get; set; } 

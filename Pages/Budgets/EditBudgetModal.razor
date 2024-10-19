@@ -1,0 +1,58 @@
+<Modal Title="Add New Budget" IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Size="Modal.ModalSize.Large">
+    <p class="text-gray-500 text-12 mb-4">Choose a category to set a spending budget. These categories can help you monitor spending.</p>
+    <EditForm @OnValidSubmit="HandleSubmit">
+        <input type="number" hidden @bind="newBudget.Id">
+        <div class="mb-4">
+            <label class="block text-gray-500 text-12 font-bold mb-2" for="category">
+                Budget Name
+            </label>
+            <InputField required TValue="string" @bind-Value="newBudget.Name" Type="text" id="maxSpend" Placeholder="$ e.g. 2000" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 text-12 font-bold mb-2" for="category">
+                Budget Category
+            </label>
+            <select @bind="newBudget.Category" id="category" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option value="">Select a category</option>
+                @foreach (var category in Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 text-12 font-bold mb-2" for="maxSpend">
+                Maximum Spend
+            </label>
+            <InputField Prefix="$" required TValue="decimal" @bind-Value="newBudget.Maximum" Type="number" id="maxSpend" Placeholder="$ e.g. 2000" />
+        </div>
+        <div class="mb-4">
+            <BasicDropDown TValue="int" Label="Theme" Options="@themesOptions"  Variant="DropdownVariant.ColorSelection">
+
+            </BasicDropDown>
+        </div>
+        <div class="flex items-center justify-between">
+            <Button Type="submit">Submit </Button>
+        </div>
+    </EditForm>
+</Modal>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public EventCallback<Budget> OnSubmit { get; set; }
+    private Budget newBudget = new Budget();
+    [CascadingParameter]
+    private IEnumerable<Category> Categories { get; set; }
+    [CascadingParameter]
+    public IEnumerable<Color> Colors { get; set; }
+    private List<DropdownOption<int>> themesOptions => Colors.Select(c => new DropdownOption<int>(c.Id, c.Name, $"{c.ColorCode}")).ToList();
+
+
+    private void HandleSubmit()
+    {
+        // Handle form submission
+        OnSubmit.InvokeAsync(newBudget);
+        IsVisibleChanged.InvokeAsync(false);
+    }
+}

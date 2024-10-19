@@ -1,0 +1,34 @@
+﻿<Modal IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Title="@($"Delete '{BudgetName}'?")" Size="Modal.ModalSize.Large">
+    <p class="text-gray-500 text-sm mb-6">
+        Are you sure you want to delete this budget? This action cannot be reversed,
+        and all the data inside it will be removed forever.
+    </p>
+    <div class="flex flex-col space-y-3">
+        <Button OnClick="ConfirmDeletion" Variant="ButtonVariant.Destroy">
+            Yes, Confirm Deletion
+        </Button>
+        <Button OnClick="CloseModal" Variant="ButtonVariant.Secondary">
+            No, Go Back
+        </Button>
+    </div>
+</Modal>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public string BudgetName { get; set; } = "";
+    [Parameter] public string BudgetId { get; set; }
+    [Parameter] public EventCallback<string> OnDelete { get; set; }
+
+    private Task CloseModal()
+    {
+        return IsVisibleChanged.InvokeAsync(false);
+    }
+
+    private async Task ConfirmDeletion()
+    {
+
+        await CloseModal();
+        await OnDelete.InvokeAsync(BudgetId);
+    }
+}

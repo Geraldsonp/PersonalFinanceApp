@@ -2,11 +2,11 @@
 @using PersonalFinanceApp.Components.InputField
 <div class="container md:mx-auto transition-all duration-500">
     <div class="flex justify-between items-center mb-3 gap-4">
-        <InputField Placeholder="Search" Icon="Icons.Gliph" ValueChanged="HandleSearch"></InputField>
+        <InputField TValue="string" Placeholder="Search" Icon="Icons.Gliph" ValueChanged="HandleSearch"></InputField>
         <p>@sortBy</p>
         <div class="flex gap-2 md:gap-4 items-center ">
-            <Dropdown Label="Sort By:" Options="sortOptions" @bind-SelectedValue="sortBy" Icon="Icons.UpAndDownArrow"></Dropdown>
-            <Dropdown Label="Category:" Options="categoryOptions" @bind-SelectedValue="categoryFilter" Icon="Icons.Filter"></Dropdown>
+            <Dropdown TKey="string" Label="Sort By:" Options="sortOptions" @bind-SelectedValue="sortBy" Icon="Icons.UpAndDownArrow"></Dropdown>
+            <Dropdown TKey="int" Label="Category:" Options="categoryOptions" @bind-SelectedValue="categoryFilter" Icon="Icons.Filter"></Dropdown>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
                 <tr class=" sm:hidden border-b hover:bg-gray-50 hover:cursor-pointer">
                     <td class="flex justify-between">
                         <div class="flex items-center">
-                            <img src="@transaction.Avatar"  alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
+                            <img src="@transaction.Avatar" alt="@transaction.RecipientOrSender" class="w-10 h-10 rounded-full mr-3" />
                             <div class="flex flex-col gap-1">
                                 <span class="text-preset-4-bold text-gray-900">@transaction.RecipientOrSender</span>
                                 <span>@transaction.Category</span>
@@ -59,44 +59,30 @@
 
 @code {
     [Parameter] public IList<Transaction> Transactions { get; set; } = new List<Transaction>();
-
+    [CascadingParameter]
+    public IEnumerable<Category> Categories { get; set; }
     private string searchTerm = "";
     private string sortBy = "latest";
-    private string categoryFilter = "";
+    private int categoryFilter = 0;
     private int currentPage = 1;
     private int pageSize = 5;
     private int totalPages => (int)Math.Ceiling((double)Transactions.Count / pageSize);
-    private List<DropdownOption> sortOptions = new List<DropdownOption>
+    private List<DropdownOption<string>> sortOptions = new List<DropdownOption<string>>
         {
-        new DropdownOption("latest", "Latest"),
-        new DropdownOption("oldest", "Oldest"),
-        new DropdownOption("a-to-z", "A to Z"),
-        new DropdownOption("z-to-a", "Z to A"),
-        new DropdownOption("highest", "Highest"),
-        new DropdownOption("lowest", "Lowest")
+        new DropdownOption<string>("latest", "Latest"),
+        new DropdownOption<string>("oldest", "Oldest"),
+        new DropdownOption<string>("a-to-z", "A to Z"),
+        new DropdownOption<string>("z-to-a", "Z to A"),
+        new DropdownOption<string>("highest", "Highest"),
+        new DropdownOption<string>("lowest", "Lowest")
         };
-    private List<DropdownOption> categoryOptions = new List<DropdownOption>
-        {
-        new DropdownOption("", "All Transactions"),
-        new DropdownOption("entertainment", "Entertainment"),
-        new DropdownOption("bills", "Bills"),
-        new DropdownOption("groceries", "Groceries"),
-        new DropdownOption("dining-out", "Dining Out"),
-        new DropdownOption("transportation", "Transportation"),
-        new DropdownOption("personal-care", "Personal Care")
-        };
+    private List<DropdownOption<int>> categoryOptions => Categories.Select(c => new DropdownOption<int>(c.Id, c.Name)).Distinct().ToList();
     protected override async Task OnInitializedAsync()
     {
 
     }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        categoryOptions = Transactions
-        .Select(t => new DropdownOption(t.Category, t.Category))
-        .Distinct()
-        .ToList();
-    }
+
 
     private List<Transaction> filteredTransactions => new TransactionFilterAndSorting(Transactions, searchTerm, categoryFilter, sortBy, currentPage, pageSize).Filter().ToList();
 

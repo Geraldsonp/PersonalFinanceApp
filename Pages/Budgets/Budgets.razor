@@ -1,6 +1,93 @@
 ﻿@page "/Budget"
-<h3>Budgets</h3>
+@using PersonalFinanceApp.Components.Button
+@using PersonalFinanceApp.Pages.Trasactions
+@inject IBudgetService BudgetService
+@inject ITransactionService TransactionService
+
+<Page PageTitle="Budgets">
+    <Actions>
+        <Button @onclick="() => showModal = true">+ Add New Budget</Button>
+    </Actions>
+    <ChildContent>
+        <div class="flex flex-col gap-5 lg:flex-row md:w-full ">
+            <div>
+                <BudgetCardSummarry SpendingSummary="@GetSpendingSummaries()"></BudgetCardSummarry>
+            </div>
+            <div class="flex-1">
+                @foreach (var budget in GetSpendingSummaries())
+                {
+                    <BudgetDetailsCard OnDeleteClicked="OpenDeleteModal" Summary="budget" LatestTransactions="@transactions.Where(t => t.Category == budget.Category).Take(5)"></BudgetDetailsCard>
+                }
+            </div>
+        </div>
+    </ChildContent>
+</Page>
+<AddNewBudgetModal @ref="AddOrEditModal" OnSubmit="@CreateBudget" IsVisible="showModal" IsVisibleChanged="@((bool visible) => showModal = visible)" />
+<DeleteBudgetConfimarionModal @bind-IsVisible="ShowDeleteModal" OnDelete="DeleteBudget" BudgetId="@selectedBudget.Id" BudgetName="@selectedBudget.Category"></DeleteBudgetConfimarionModal>
 
 @code {
+    private bool showModal = false;
+    private List<Budget> budgets = new List<Budget>();
+    private Budget selectedBudget = new Budget();
 
+    private bool ShowDeleteModal { get; set; }
+
+
+    private AddNewBudgetModal AddOrEditModal { get; set; }
+
+    private List<Transaction> transactions = new List<Transaction>();
+    protected override async Task OnInitializedAsync()
+    {
+        var _budgets = await BudgetService.GetAsync();
+        var _transactions = await TransactionService.GetAsync();
+
+        budgets = _budgets.ToList();
+        transactions = _transactions.ToList();
+    }
+
+
+    private async Task CreateBudget(Budget newBudget)
+    {
+        await BudgetService.PostAsync(newBudget);
+        budgets.Add(newBudget);
+    }
+
+    private async Task UpdateBudget(Budget updatedBudget)
+    {
+        await BudgetService.PutAsync(updatedBudget);
+        var index = budgets.FindIndex(b => b.Id == updatedBudget.Id);
+        if (index != -1)
+        {
+            budgets[index] = updatedBudget;
+        }
+    }
+
+    private async Task OpenDeleteModal(string id)
+    {
+        selectedBudget = budgets.FirstOrDefault(b => b.Id == id);
+        ShowDeleteModal = true;
+    }
+    private async Task DeleteBudget(string id)
+    {
+        await BudgetService.DeleteAsync(id);
+        budgets.RemoveAll(b => b.Id == id);
+    }
+
+    private List<SpendingSummary> GetSpendingSummaries()
+    {
+        return budgets
+        .DistinctBy(b => b.Category)
+        .Select(b => new SpendingSummary
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Category = b.Category,
+                Limit = b.Maximum,
+                Color = b.Theme,
+                Spent = transactions
+            .Where(t => t.Category == b.Category && t.Amount < 0)
+            .Sum(t => t.Amount * -1)
+            })
+        .ToList();
+    }
 }

@@ -1,22 +1,31 @@
 
 using System.Net.Http.Json;
+using PersonalFinanceApp.Models;
 
 namespace PersonalFinanceApp.Services;
 
 public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T : class where TKey : notnull
 {
-    public string Endpoint { get; init; }
+    public string _endpoint { get; init; }
     private HttpClient _httpClient { get; init; }
     public GenericApiService(string endpoint, HttpClient httpClient)
     {
-        Endpoint = endpoint;
+        if (!endpoint.StartsWith("/"))
+        {
+            _endpoint = $"/{endpoint}";
+        }
+        else
+        {
+
+            _endpoint =   endpoint;
+        }
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri(_httpClient.BaseAddress, Endpoint);
     }
 
     public async Task DeleteAsync(TKey id)
     {
-        var response = await _httpClient.DeleteAsync($"{id}");
+        var uri = $"{_endpoint}/{id}";
+        var response = await _httpClient.DeleteAsync(uri);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -26,7 +35,8 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
 
     public async Task<IEnumerable<T>> GetAsync()
     {
-        var response = await _httpClient.GetAsync("");
+        var uri = _endpoint;
+        var response = await _httpClient.GetAsync(uri);
 
         if (response.IsSuccessStatusCode)
         {
@@ -38,7 +48,8 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
 
     public async Task<T> GetAsync(TKey id)
     {
-        var response = await _httpClient.GetAsync($"{id}");
+        var uri =  $"{_endpoint}/{id}";
+        var response = await _httpClient.GetAsync(uri);
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadFromJsonAsync<T>();
@@ -53,7 +64,13 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
         {
             throw new ArgumentNullException(nameof(obj));
         }
-        var response = await _httpClient.PostAsJsonAsync("", obj);
+
+        if(obj is IHasId hasId){
+            hasId.Id = Guid.NewGuid().ToString();
+        }
+
+        var uri =_endpoint;
+        var response = await _httpClient.PostAsJsonAsync(uri, obj);
 
         if (!response.IsSuccessStatusCode)
             return await response.Content.ReadFromJsonAsync<T>();
@@ -63,7 +80,8 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
 
     public async Task<T> PutAsync(T obj)
     {
-        var response = await _httpClient.PutAsJsonAsync("", obj);
+        var uri = _endpoint;
+        var response = await _httpClient.PutAsJsonAsync(uri, obj);
 
         if (!response.IsSuccessStatusCode)
             return await response.Content.ReadFromJsonAsync<T>();

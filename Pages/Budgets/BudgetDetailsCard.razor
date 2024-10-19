@@ -1,0 +1,95 @@
+﻿@using System.Globalization
+@using PersonalFinanceApp.Pages.Trasactions
+
+<div class="bg-white rounded-lg shadow-md p-6 mb-6" >
+    <div class="flex justify-between  items-center mb-4">
+        <div class="flex  items-center">
+            <div style="background-color: @Summary.Color" class="w-4 h-4 rounded-full mr-4"></div>
+            <h2 class="text-lg font-semibold text-gray-800">@Summary.Category</h2>
+        </div>
+        <div class="relative">
+            <button @onclick="() => showMenu = !showMenu" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 text-xl font-semibold">...</button>
+            <ul class="absolute top-10 right-0 w-40 bg-white shadow-lg rounded-lg px-2 transition-opacity @(showMenu ? "visible opacity-100" : "invisible opacity-0")">
+                <li class="border-b border-gray-100 rounded-md">
+                    <button @onclick="EditBudget" class="w-full py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Edit Budget</button>
+                </li>
+                <li class="border-b border-gray-100">
+                    <button @onclick="DeleteBudget" class="w-full py-2 px-4 text-red text-sm hover:bg-gray-100 ">Delete Budget</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="flex justify-between text-sm text-gray-600 mb-1">
+            <span class="text-sm text-gray-500">Maximum of $@Summary.Limit.ToString("F0")</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-md h-300">
+            <div class="h-300 rounded-md" style="width: @ProgressPercentage%; background-color: @Summary.Color"></div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 my-3">
+        <div class=" px-2 border-l-8 rounded " style="border-left-color: @Summary.Color">
+            <h3 class="text-md font-semibold text-gray-700 mb-2">Spent</h3>
+            <span class="text-2xl font-bold text-gray-900">$@Summary.Spent.ToString("F0")</span>
+        </div>
+        <div class=" px-2 border-l-8 rounded border-l-beige-100">
+            <h3 class="text-md font-semibold text-gray-700 mb-2">Remaining</h3>
+            <span class="text-2xl font-bold text-gray-900">$@((Summary.Limit - Summary.Spent).ToString("F0"))</span>
+        </div>
+
+    </div>
+
+    <div class=" bg-beige-100 p-4 rounded-xl">
+        <div class="flex justify-between mb-2">
+            <h3 class="text-md font-semibold text-gray-700 mb-2">Latest Spending</h3>
+            <NavLink href="Transactions" class="text-sm font-semibold text-gray-700 mb-2 flex justify-center items-center">See All
+                <IconComponent Icon="Icons.SmallArrowRight" Heigth="14" Width="14"></IconComponent>
+            </NavLink>
+        </div>
+        @foreach (var transaction in LatestTransactions)
+        {
+            <div class="flex justify-between items-center py-3 border-b border-gray-200 last:border-b-0">
+                <div class="flex items-center">
+                    <img src="@transaction.Avatar" alt="@transaction.RecipientOrSender" class="w-8 h-8 rounded-full mr-3" />
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">@transaction.RecipientOrSender</p>
+                    </div>
+                </div>
+                <div class="flex items-end  flex-col">
+                    <span class="text-sm font-bold @(transaction.Type == TransactionType.Expense ? "text-red-600" : "text-green-600")">
+                        $@(transaction.Amount.ToString("F2"))
+                    </span>
+                    <p class="text-xs text-gray-500">@transaction.Date.ToString("dd MMM yyyy")</p>
+
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+@code {
+    [Parameter] public SpendingSummary Summary { get; set; }
+    [Parameter] public IEnumerable<Transaction> LatestTransactions { get; set; } = new List<Transaction>();
+    [Parameter] public EventCallback OnSeeAllClicked { get; set; }
+    [Parameter] public EventCallback<string> OnEditClicked { get; set; }
+    [Parameter] public EventCallback<string> OnDeleteClicked { get; set; }
+
+    private bool showMenu = false;
+
+    private string ProgressPercentage => Math.Min((double)Summary.Spent / (double)Summary.Limit * 100, 100).ToString("F0");
+
+    private async Task EditBudget()
+    {
+        await OnEditClicked.InvokeAsync(Summary.Id);
+        showMenu = false;
+    }
+
+    private async Task DeleteBudget()
+    {
+        await OnDeleteClicked.InvokeAsync(Summary.Id);
+        showMenu = false;
+    }
+}

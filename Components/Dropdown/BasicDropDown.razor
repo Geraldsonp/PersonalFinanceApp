@@ -1,0 +1,99 @@
+﻿<div class="relative inline-block w-full">
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <label class="block text-12 font-bold text-gray-500 mb-1">@Label</label>
+    }
+    <button @onclick="ToggleDropdown" class="@GetButtonClasses()" type="button">
+        <span class="flex items-center">
+            @if (Variant == DropdownVariant.ColorSelection && SelectedValue > 0)
+            {
+                <span class="w-4 h-4 rounded-full mr-2" style="background-color: @GetSelectedValueColor()"></span>
+            }
+            <span class="truncate">@(GetSelectedOptionLabel() ?? "Select an option")</span>
+        </span>
+        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+    </button>
+    @if (isOpen)
+    {
+        <div class="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg">
+            <ul class="py-1 overflow-auto text-base rounded-md max-h-60 focus:outline-none sm:text-sm">
+                @foreach (var option in Options)
+                {
+                    <li class="@GetOptionClasses(option)" @onclick="() => SelectOption(option.Value)">
+                        <div class="flex items-center">
+                            @if (Variant == DropdownVariant.ColorSelection)
+                            {
+                                <span class="w-4 h-4 rounded-full mr-2" style="background-color: @option.Color"></span>
+                            }
+                            <span class="truncate">@option.Label</span>
+                        </div>
+                        @if (option.IsUsed)
+                        {
+                            <span class="text-gray-400 ml-2">Already used</span>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; }
+    [Parameter] public List<DropdownOption<int>> Options { get; set; }
+    [Parameter] public EventCallback<int> SelectedValueChanged { get; set; }
+    [Parameter] public int SelectedValue { get; set; }
+    [Parameter] public EventCallback<string> SelectedColorChanged { get; set; }
+    [Parameter] public string SelectedColor { get; set; }
+    [Parameter] public DropdownVariant Variant { get; set; } = DropdownVariant.Default;
+
+
+    private bool isOpen = false;
+
+    private void ToggleDropdown()
+    {
+        isOpen = !isOpen;
+    }
+
+    private void SelectOption(int value)
+    {
+        SelectedValue = value;
+
+        SelectedValueChanged.InvokeAsync(SelectedValue);
+
+        if (Variant == DropdownVariant.ColorSelection)
+        {
+            SelectedColor = GetSelectedValueColor();
+            SelectedColorChanged.InvokeAsync(SelectedColor);
+        }
+        
+        isOpen = false;
+    }
+
+    private string GetSelectedOptionLabel()
+    {
+        return Options?.FirstOrDefault(o => o.Value == SelectedValue)?.Label;
+    }
+
+    private string GetSelectedValueColor()
+    {
+        return Options?.FirstOrDefault(o => o.Value == SelectedValue)?.Color;
+    }
+
+    private string GetButtonClasses()
+    {
+        return $"bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 inline-flex justify-between w-full text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
+    }
+
+    private string GetOptionClasses(DropdownOption<int> option)
+    {
+        var baseClasses = "cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-gray-100";
+        if (option.Value == SelectedValue)
+        {
+            baseClasses += " text-indigo-600 bg-indigo-50";
+        }
+        return baseClasses;
+    }
+}

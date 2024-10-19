@@ -1,9 +1,9 @@
-﻿@page "/bills"
+﻿@inject IBillsService billsService
+@page "/bills"
 <h3>Bills</h3>
 
 @code {
-    [Inject] IBillsService billsService { get; set; }
-    private IEnumerable<Bill> _bills;
+    private IEnumerable<Bill> _bills = new List<Bill>();
 
     protected override async Task OnInitializedAsync()
     {

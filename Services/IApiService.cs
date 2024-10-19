@@ -2,7 +2,7 @@ namespace PersonalFinanceApp.Services;
 
 public interface IApiService<T, TKey> where T : class
 {
-    string Endpoint { get; init; }
+    string _endpoint { get; init; }
 
     Task<IEnumerable<T>> GetAsync();
 
