@@ -449,40 +449,18 @@
   ],
   "budgets": [
     {
-      "id": "1",
-      "category": "Entertainment",
-      "maximum": 50,
-      "theme": "#277C78"
-    },
-    {
-      "category": "Bills",
-      "maximum": 750,
-      "theme": "#82C9D7",
-      "id": "2"
-    },
-    {
+      "id": "4dab4fb1-6c7e-46e1-ac5c-e4366f6d09ec",
+      "name": null,
       "category": "Dining Out",
-      "maximum": 75,
-      "theme": "#F2CDAC",
-      "id": "3"
+      "maximum": 300,
+      "theme": "#FF0000"
     },
     {
-      "category": "Personal Care",
-      "maximum": 100,
-      "theme": "#626070",
-      "id": "4"
-    },
-    {
-      "id": 4,
+      "id": "d3a16f94-dd65-4266-afad-c64c1b929a57",
+      "name": null,
       "category": "Entertainment",
-      "maximum": 10000,
-      "theme": "#3F51B5"
-    },
-    {
-      "id": 5,
-      "category": "Bills",
-      "maximum": 10000,
-      "theme": "#2196F3"
+      "maximum": 244,
+      "theme": "#00FF00"
     }
   ],
   "pots": [
@@ -520,6 +498,240 @@
       "total": 531,
       "theme": "#826CB0",
       "id": "89d7"
+    }
+  ],
+  "colors": [
+    {
+      "id": "1",
+      "name": "Red",
+      "color": "#FF0000"
+    },
+    {
+      "id": "2",
+      "name": "Blue",
+      "color": "#0000FF"
+    },
+    {
+      "id": "3",
+      "name": "Green",
+      "color": "#00FF00"
+    },
+    {
+      "id": "4",
+      "name": "Yellow",
+      "color": "#FFFF00"
+    },
+    {
+      "id": "5",
+      "name": "Purple",
+      "color": "#800080"
+    },
+    {
+      "id": "6",
+      "name": "Orange",
+      "color": "#FFA500"
+    },
+    {
+      "id": "7",
+      "name": "Pink",
+      "color": "#FFC0CB"
+    },
+    {
+      "id": "8",
+      "name": "Brown",
+      "color": "#A52A2A"
+    },
+    {
+      "id": "9",
+      "name": "Gray",
+      "color": "#808080"
+    },
+    {
+      "id": "10",
+      "name": "Black",
+      "color": "#000000"
+    },
+    {
+      "id": "11",
+      "name": "White",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "12",
+      "name": "Cyan",
+      "color": "#00FFFF"
+    },
+    {
+      "id": "13",
+      "name": "Magenta",
+      "color": "#FF00FF"
+    },
+    {
+      "id": "14",
+      "name": "Lime",
+      "color": "#00FF00"
+    },
+    {
+      "id": "15",
+      "name": "Teal",
+      "color": "#008080"
+    },
+    {
+      "id": "16",
+      "name": "Indigo",
+      "color": "#4B0082"
+    },
+    {
+      "id": "17",
+      "name": "Maroon",
+      "color": "#800000"
+    },
+    {
+      "id": "18",
+      "name": "Navy",
+      "color": "#000080"
+    },
+    {
+      "id": "19",
+      "name": "Olive",
+      "color": "#808000"
+    },
+    {
+      "id": "20",
+      "name": "Turquoise",
+      "color": "#40E0D0"
+    },
+    {
+      "id": "21",
+      "name": "Silver",
+      "color": "#C0C0C0"
+    },
+    {
+      "id": "22",
+      "name": "Gold",
+      "color": "#FFD700"
+    },
+    {
+      "id": "23",
+      "name": "Coral",
+      "color": "#FF7F50"
+    },
+    {
+      "id": "24",
+      "name": "Salmon",
+      "color": "#FA8072"
+    },
+    {
+      "id": "25",
+      "name": "Beige",
+      "color": "#F5F5DC"
+    },
+    {
+      "id": "26",
+      "name": "Lavender",
+      "color": "#E6E6FA"
+    },
+    {
+      "id": "27",
+      "name": "Khaki",
+      "color": "#F0E68C"
+    },
+    {
+      "id": "28",
+      "name": "Plum",
+      "color": "#DDA0DD"
+    },
+    {
+      "id": "29",
+      "name": "Crimson",
+      "color": "#DC143C"
+    },
+    {
+      "id": "30",
+      "name": "Forest Green",
+      "color": "#228B22"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "General"
+    },
+    {
+      "id": "2",
+      "name": "Dining Out"
+    },
+    {
+      "id": "3",
+      "name": "Groceries"
+    },
+    {
+      "id": "4",
+      "name": "Entertainment"
+    },
+    {
+      "id": "5",
+      "name": "Transportation"
+    },
+    {
+      "id": "6",
+      "name": "Lifestyle"
+    },
+    {
+      "id": "7",
+      "name": "Personal Care"
+    },
+    {
+      "id": "8",
+      "name": "Education"
+    },
+    {
+      "id": "9",
+      "name": "Bills"
+    },
+    {
+      "id": "10",
+      "name": "Shopping"
+    },
+    {
+      "id": "11",
+      "name": "Housing"
+    },
+    {
+      "id": "12",
+      "name": "Healthcare"
+    },
+    {
+      "id": "13",
+      "name": "Utilities"
+    },
+    {
+      "id": "14",
+      "name": "Savings & Investments"
+    },
+    {
+      "id": "15",
+      "name": "Gifts & Donations"
+    },
+    {
+      "id": "16",
+      "name": "Travel"
+    },
+    {
+      "id": "17",
+      "name": "Hobbies"
+    },
+    {
+      "id": "18",
+      "name": "Insurance"
+    },
+    {
+      "id": "19",
+      "name": "Debt Payments"
+    },
+    {
+      "id": "20",
+      "name": "Pets"
     }
   ]
 }
