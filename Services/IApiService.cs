@@ -10,7 +10,7 @@ public interface IApiService<T, TKey> where T : class
 
     Task<T> PostAsync(T obj);
 
-    Task<T> PutAsync(T obj);
+    Task<T> PutAsync(T obj, TKey id);
 
     Task DeleteAsync(TKey id);
 
