@@ -4,7 +4,7 @@ using PersonalFinanceApp.Pages.Budgets;
 
 namespace PersonalFinanceApp.Services
 {
-    public class BudgetService : GenericApiService<Budget, int>, IBudgetService
+    public class BudgetService : GenericApiService<Budget, string>, IBudgetService
     {
         public BudgetService(HttpClient httpClient) : base("budgets", httpClient)
         {

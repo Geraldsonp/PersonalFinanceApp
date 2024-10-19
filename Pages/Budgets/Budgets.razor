@@ -16,18 +16,22 @@
             <div class="flex-1">
                 @foreach (var budget in GetSpendingSummaries())
                 {
-                    <BudgetDetailsCard OnDeleteClicked="@DeleteBudget" Summary="budget" LatestTransactions="@transactions.Where(t => t.Category == budget.Category).Take(5)"></BudgetDetailsCard>
+                    <BudgetDetailsCard OnDeleteClicked="OpenDeleteModal" Summary="budget" LatestTransactions="@transactions.Where(t => t.Category == budget.Category).Take(5)"></BudgetDetailsCard>
                 }
             </div>
         </div>
     </ChildContent>
 </Page>
 <AddNewBudgetModal @ref="AddOrEditModal" OnSubmit="@CreateBudget" IsVisible="showModal" IsVisibleChanged="@((bool visible) => showModal = visible)" />
-
+<DeleteBudgetConfimarionModal @bind-IsVisible="ShowDeleteModal" OnDelete="DeleteBudget" BudgetId="@selectedBudget.Id" BudgetName="@selectedBudget.Category"></DeleteBudgetConfimarionModal>
 
 @code {
     private bool showModal = false;
     private List<Budget> budgets = new List<Budget>();
+    private Budget selectedBudget = new Budget();
+
+    private bool ShowDeleteModal { get; set; }
+
 
     private AddNewBudgetModal AddOrEditModal { get; set; }
 
@@ -58,7 +62,12 @@
         }
     }
 
-    private async Task DeleteBudget(int id)
+    private async Task OpenDeleteModal(string id)
+    {
+        selectedBudget = budgets.FirstOrDefault(b => b.Id == id);
+        ShowDeleteModal = true;
+    }
+    private async Task DeleteBudget(string id)
     {
         await BudgetService.DeleteAsync(id);
         budgets.RemoveAll(b => b.Id == id);

@@ -1,12 +1,7 @@
 ﻿<Modal Title="Add New Budget" IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Size="Modal.ModalSize.Large">
     <p class="text-gray-500 text-12 mb-4">Choose a category to set a spending budget. These categories can help you monitor spending.</p>
     <form @onsubmit="HandleSubmit">
-        <div class="mb-4">
-            <label class="block text-gray-500 text-12 font-bold mb-2" for="maxSpend">
-                Budget Name
-            </label>
-            <InputField   required TValue="string" @bind-Value="newBudget.Name" Type="text" Placeholder="e.g. Home Groceries"  />
-        </div>
+        
         <div class="mb-4">
             <label class="block text-gray-500 text-12 font-bold mb-2" for="category">
                 Budget Category
@@ -15,7 +10,7 @@
                 <option value="">Select a category</option>
                 @foreach (var category in Categories)
                 {
-                    <option value="@category.Id">@category.Name</option>
+                    <option value="@category.Name">@category.Name</option>
                 }
             </select>
         </div>

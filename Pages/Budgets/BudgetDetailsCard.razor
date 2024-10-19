@@ -74,8 +74,9 @@
     [Parameter] public SpendingSummary Summary { get; set; }
     [Parameter] public IEnumerable<Transaction> LatestTransactions { get; set; } = new List<Transaction>();
     [Parameter] public EventCallback OnSeeAllClicked { get; set; }
-    [Parameter] public EventCallback<int> OnEditClicked { get; set; }
-    [Parameter] public EventCallback<int> OnDeleteClicked { get; set; }
+    [Parameter] public EventCallback<string> OnEditClicked { get; set; }
+    [Parameter] public EventCallback<string> OnDeleteClicked { get; set; }
+
     private bool showMenu = false;
 
     private string ProgressPercentage => Math.Min((double)Summary.Spent / (double)Summary.Limit * 100, 100).ToString("F0");

@@ -5,7 +5,7 @@ namespace PersonalFinanceApp.Pages.Budgets;
 
 public class Budget : IHasId
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; }
     public string Category { get; set; }
     public decimal Maximum { get; set; }

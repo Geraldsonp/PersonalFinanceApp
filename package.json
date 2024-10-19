@@ -1,7 +1,8 @@
 {
   "scripts": {
     "watch-css": "npx tailwindcss -i wwwroot/css/app.css -o wwwroot/css/app.min.css --watch",
-    "fake-server": "json-server db.json"
+    "fake-server": "json-server db.json",
+    "dev": "npm run fake-server & npm run watch-css"
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",

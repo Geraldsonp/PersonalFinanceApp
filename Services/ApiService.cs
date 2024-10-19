@@ -17,7 +17,7 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
         else
         {
 
-            _endpoint = endpoint;
+            _endpoint =   endpoint;
         }
         _httpClient = httpClient;
     }
@@ -66,7 +66,7 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
         }
 
         if(obj is IHasId hasId){
-            hasId.Id = Random.Shared.Next();
+            hasId.Id = Guid.NewGuid().ToString();
         }
 
         var uri =_endpoint;
