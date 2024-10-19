@@ -78,9 +78,9 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
         throw new Exception(response.ReasonPhrase);
     }
 
-    public async Task<T> PutAsync(T obj)
+    public async Task<T> PutAsync(T obj, TKey id)
     {
-        var uri = _endpoint;
+        var uri = _endpoint + "/" + id;
         var response = await _httpClient.PutAsJsonAsync(uri, obj);
 
         if (!response.IsSuccessStatusCode)
