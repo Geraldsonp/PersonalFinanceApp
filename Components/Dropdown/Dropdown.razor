@@ -1,9 +1,10 @@
 @using System.Collections.Generic
 @using Microsoft.AspNetCore.Components.Web
 @using PersonalFinanceApp.Components
+@typeparam TKey where TKey : IEquatable<TKey>
 
 <div class="md:flex items-center gap-3 transition-all ">
-    <label class=" text-gray-700 text-12 hidden md:block w-full" >@Label</label>
+    <label class=" text-gray-700 text-12 hidden md:block w-full">@Label</label>
     <div class="relative inline-block w-full">
         <button @onclick="ToggleDropdown" class=" md:bg-white border md:border-gray-300 hover:border-gray-500 px-2 md:px-4 py-2 rounded md:shadow leading-tight focus:outline-none focus:shadow-outline text-sm md:min-w-36">
             <div class="hidden md:flex items-center justify-between">
@@ -34,7 +35,7 @@
             <div class="absolute z-10 right-0 w-full mt-1 bg-white border border-gray-100 rounded shadow-lg" style="min-width: 172px;">
                 @foreach (var option in Options)
                 {
-                    <button @onclick="() => SelectOption(option)" class="block w-full border-b border-gray-100 text-left px-4 py-2 hover:bg-gray-100 text-sm @(option.Value == SelectedValue ? "bg-gray-100 font-bold" : "")" style="min-width: 172px;">
+                    <button @onclick="() => SelectOption(option)" class="block w-full border-b border-gray-100 text-left px-4 py-2 hover:bg-gray-100 text-sm @(option.Value.Equals(SelectedValue) ? "bg-gray-100 font-bold" : "")" style="min-width: 172px;">
                         <span class="truncate block">@option.Label</span>
                     </button>
                 }
@@ -45,13 +46,13 @@
 
 @code {
     [Parameter] public string Label { get; set; }
-    [Parameter] public List<DropdownOption> Options { get; set; }
-    [Parameter] public EventCallback<string> SelectedValueChanged { get; set; }
+    [Parameter] public List<DropdownOption<TKey>> Options { get; set; }
+    [Parameter] public EventCallback<TKey> SelectedValueChanged { get; set; }
     [Parameter]
-    public string SelectedValue { get; set; }
+    public TKey SelectedValue { get; set; }
     [Parameter]
     public Icon? Icon { get; set; }
-    private DropdownOption SelectedOption => Options.FirstOrDefault(o => o.Value == SelectedValue);
+    private DropdownOption<TKey> SelectedOption => Options.FirstOrDefault(o => o.Value.Equals(SelectedValue));
     private bool IsOpen { get; set; }
 
     private void ToggleDropdown()
@@ -61,12 +62,12 @@
 
     private void ClearSelected()
     {
-        SelectedValue = "";
+        SelectedValue = default(TKey);
         IsOpen = false;
         SelectedValueChanged.InvokeAsync(SelectedValue);
     }
 
-    private async Task SelectOption(DropdownOption option)
+    private async Task SelectOption(DropdownOption<TKey> option)
     {
         SelectedValue = option.Value;
         IsOpen = false;

@@ -9,15 +9,27 @@
         <Button @onclick="() => showModal = true">+ Add New Budget</Button>
     </Actions>
     <ChildContent>
-        <BudgetCard SpendingSummary="@GetSpendingSummaries()"></BudgetCard>
+        <div class="flex flex-col gap-5 lg:flex-row md:w-full ">
+            <div>
+                <BudgetCardSummarry SpendingSummary="@GetSpendingSummaries()"></BudgetCardSummarry>
+            </div>
+            <div class="flex-1">
+                @foreach (var budget in GetSpendingSummaries())
+                {
+                    <BudgetDetailsCard OnDeleteClicked="@DeleteBudget" Summary="budget" LatestTransactions="@transactions.Where(t => t.Category == budget.Category).Take(5)"></BudgetDetailsCard>
+                }
+            </div>
+        </div>
     </ChildContent>
 </Page>
-<AddNewBudgetModal OnSubmit="@CreateBudget" IsVisible="showModal" IsVisibleChanged="@((bool visible) => showModal = visible)" />
+<AddNewBudgetModal @ref="AddOrEditModal" OnSubmit="@CreateBudget" IsVisible="showModal" IsVisibleChanged="@((bool visible) => showModal = visible)" />
 
 
 @code {
     private bool showModal = false;
     private List<Budget> budgets = new List<Budget>();
+
+    private AddNewBudgetModal AddOrEditModal { get; set; }
 
     private List<Transaction> transactions = new List<Transaction>();
     protected override async Task OnInitializedAsync()
@@ -27,8 +39,8 @@
 
         budgets = _budgets.ToList();
         transactions = _transactions.ToList();
-
     }
+
 
     private async Task CreateBudget(Budget newBudget)
     {
@@ -55,16 +67,18 @@
     private List<SpendingSummary> GetSpendingSummaries()
     {
         return budgets
-            .DistinctBy(b => b.Category)
-            .Select(b => new SpendingSummary
+        .DistinctBy(b => b.Category)
+        .Select(b => new SpendingSummary
             {
+                Id = b.Id,
+                Name = b.Name,
                 Category = b.Category,
                 Limit = b.Maximum,
                 Color = b.Theme,
                 Spent = transactions
-                    .Where(t => t.Category == b.Category && t.Amount < 0)
-                    .Sum(t => t.Amount * -1)
+            .Where(t => t.Category == b.Category && t.Amount < 0)
+            .Sum(t => t.Amount * -1)
             })
-            .ToList();
+        .ToList();
     }
 }

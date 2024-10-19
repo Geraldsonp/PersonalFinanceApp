@@ -14,3 +14,8 @@
 .nav-item>span{
     @apply hidden md:block
 }
+
+
+body{
+    @apply  bg-beige-100
+}

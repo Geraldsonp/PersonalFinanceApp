@@ -1,11 +1,12 @@
-﻿<Modal Title="Add New Budget" IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Size="Modal.ModalSize.Large">
+<Modal Title="Add New Budget" IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Size="Modal.ModalSize.Large">
     <p class="text-gray-500 text-12 mb-4">Choose a category to set a spending budget. These categories can help you monitor spending.</p>
-    <form @onsubmit="HandleSubmit">
+    <EditForm @OnValidSubmit="HandleSubmit">
+        <input type="number" hidden @bind="newBudget.Id">
         <div class="mb-4">
-            <label class="block text-gray-500 text-12 font-bold mb-2" for="maxSpend">
+            <label class="block text-gray-500 text-12 font-bold mb-2" for="category">
                 Budget Name
             </label>
-            <InputField   required TValue="string" @bind-Value="newBudget.Name" Type="text" Placeholder="e.g. Home Groceries"  />
+            <InputField required TValue="string" @bind-Value="newBudget.Name" Type="text" id="maxSpend" Placeholder="$ e.g. 2000" />
         </div>
         <div class="mb-4">
             <label class="block text-gray-500 text-12 font-bold mb-2" for="category">
@@ -23,17 +24,17 @@
             <label class="block text-gray-500 text-12 font-bold mb-2" for="maxSpend">
                 Maximum Spend
             </label>
-            <InputField Prefix="$"  required TValue="decimal" @bind-Value="newBudget.Maximum" Type="number" id="maxSpend" Placeholder="$ e.g. 2000" />
+            <InputField Prefix="$" required TValue="decimal" @bind-Value="newBudget.Maximum" Type="number" id="maxSpend" Placeholder="$ e.g. 2000" />
         </div>
         <div class="mb-4">
-            <BasicDropDown  Label="Theme" Options="@themesOptions"  @bind-SelectedColor="newBudget.Theme"  Variant="DropdownVariant.ColorSelection">
-                
+            <BasicDropDown TValue="int" Label="Theme" Options="@themesOptions"  Variant="DropdownVariant.ColorSelection">
+
             </BasicDropDown>
         </div>
         <div class="flex items-center justify-between">
             <Button Type="submit">Submit </Button>
         </div>
-    </form>
+    </EditForm>
 </Modal>
 
 @code {
@@ -42,20 +43,16 @@
     [Parameter] public EventCallback<Budget> OnSubmit { get; set; }
     private Budget newBudget = new Budget();
     [CascadingParameter]
-    public IEnumerable<Category> Categories { get; set; }
+    private IEnumerable<Category> Categories { get; set; }
     [CascadingParameter]
     public IEnumerable<Color> Colors { get; set; }
     private List<DropdownOption<int>> themesOptions => Colors.Select(c => new DropdownOption<int>(c.Id, c.Name, $"{c.ColorCode}")).ToList();
 
-    protected override void OnInitialized()
-    {
-    }
 
     private void HandleSubmit()
     {
         // Handle form submission
         OnSubmit.InvokeAsync(newBudget);
         IsVisibleChanged.InvokeAsync(false);
-        newBudget = new Budget();
     }
-}    
+}

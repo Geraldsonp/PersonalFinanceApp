@@ -1,22 +1,41 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Globalization
+@using PersonalFinanceApp.Services
+@inherits LayoutComponentBase
 @inject IJSRuntime Js
+@inject IColorsService ColorService
+@inject ICategoryService CategoryService
 
-<div class="antialiased bg-gray-50 dark:bg-gray-900 flex flex-col-reverse md:flex-row min-h-screen ">
+<CascadingValue Value="colors">
+    <CascadingValue Value="categories">
+        <div class="antialiased bg-beige-100 flex flex-col-reverse md:flex-row ">
 
-    <SideBar></SideBar>
-    <div class="w-full  bg-beige-100">
-        <main class="px-6 py-4">
-            @Body
-        </main>
-    </div>
-</div>
-
+            <SideBar></SideBar>
+            <main class="px-4 py-6 container mx-auto max-h-dvh overflow-y-auto scroll-smooth">
+                @Body
+            </main>
+        </div>
+    </CascadingValue>
+</CascadingValue>
 @code {
+
+    private IEnumerable<Category> categories = new List<Category>();
+    private IEnumerable<Color> colors = new List<Color>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await CategoryService.GetAsync();
+        colors = await ColorService.GetAsync();
+    }
+
     protected override async Task OnAfterRenderAsync(bool isFirstRender)
     {
         if (isFirstRender)
         {
             await Js.InvokeVoidAsync("window.initializeFlowbite");
+
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("es-Do");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("es-Do");
         }
     }
 }
+using PersonalFinanceApp.Services;

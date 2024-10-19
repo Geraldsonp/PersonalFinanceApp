@@ -1,10 +1,16 @@
 ﻿@using static PersonalFinanceApp.Components.PieChart
-<div class="bg-white rounded-xl shadow-lg p-6 max-w-sm">
-    <div class="flex justify-between items-start mb-6">
-        <PieChart Class="w-32 h-32" Size="w-32 h-32" ShowLegend="false" Data="@GetPieChartData()" />
-        <h2 class="text-xl font-semibold">Spending Summary</h2>
+<div class="bg-white rounded-xl shadow-lg p-6 md:flex  md:flex-row md:items-center lg:block ">
+    <div class="flex flex-col mb-6 px-8">
+        <div class="relative">
+            <PieChart Class="w-32 h-32" Size="w-32 h-32" ShowLegend="false" Data="@GetPieChartData()" />
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2  -translate-y-1/2">
+                <h3 class="text-xl font-bold text-center  text-gray-900 ">$@GetTotalSpent().ToString("F2")</h3>
+                <span class="text-xs text-center text-gray-500">of $@GetTotalLimit().ToString("F2") limit</span>
+            </div>
+        </div>
     </div>
     <div class="space-y-3">
+        <h2 class="text-xl font-semibold">Spending Summary</h2>
         @foreach (var category in SpendingSummary.OrderByDescending(c => c.Spent))
         {
             <div class="flex items-center justify-between border-b pb-3 border-grey-100">

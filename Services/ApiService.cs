@@ -1,5 +1,6 @@
 
 using System.Net.Http.Json;
+using PersonalFinanceApp.Models;
 
 namespace PersonalFinanceApp.Services;
 
@@ -62,6 +63,10 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
         if (obj is null)
         {
             throw new ArgumentNullException(nameof(obj));
+        }
+
+        if(obj is IHasId hasId){
+            hasId.Id = Random.Shared.Next();
         }
 
         var uri =_endpoint;

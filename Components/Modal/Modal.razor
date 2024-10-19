@@ -24,7 +24,7 @@
     [Parameter] public ModalSize Size { get; set; } = ModalSize.Medium;
 
     private string GetModalClass() => 
-        $"fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 transition-opacity duration-300 ease-in-out {(IsVisible ? "visible opacity-100" : "invisible opacity-0")}";
+        $"fixed px-14 md:px-0 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 transition-opacity duration-300 ease-in-out {(IsVisible ? "visible opacity-100" : "invisible opacity-0")}";
 
     private string GetModalContentClass()
     {

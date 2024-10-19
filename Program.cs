@@ -15,6 +15,8 @@ builder.Services.AddScoped(sp => new HttpClient
 builder.Services.AddScoped<IBillsService, BillService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
+builder.Services.AddScoped<IColorsService, ColorsService>();
+builder.Services.AddScoped<ICategoryService, CategoriesService>();
 builder.Services.AddSingleton<AppState>();
 
 await builder.Build().RunAsync();

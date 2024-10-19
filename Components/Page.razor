@@ -1,24 +1,22 @@
-
-
- @if (PageTitle != null)
-    {
-        <div class="flex justify-between pb-4">
-            <h1 class="text-32 font-bold">@PageTitle</h1>
-            @if (Actions != null)
-            {
-                <div>
-                    @Actions
-                </div>
-            }
-        </div>
-    }
-<div class="">
-   
+@if (PageTitle != null)
+{
+    <div class="flex justify-between pb-4">
+        <h1 class="text-32 font-bold">@PageTitle</h1>
+        @if (Actions != null)
+        {
+            <div>
+                @Actions
+            </div>
+        }
+    </div>
+}
+<div class="w-full flex justify-center">
     @if (ChildContent != null)
     {
         @ChildContent
     }
 </div>
+
 
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
