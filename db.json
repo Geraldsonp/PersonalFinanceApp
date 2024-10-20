@@ -517,7 +517,7 @@
       "name": "Savings",
       "target": 2000,
       "total": 159,
-      "theme": "#277C78",
+      "theme": "#800000",
       "id": "d9c0"
     },
     {
@@ -531,7 +531,7 @@
       "name": "Gift",
       "target": 150,
       "total": 110,
-      "theme": "#82C9D7",
+      "theme": "#FFFF00",
       "id": "e19e"
     },
     {
@@ -547,6 +547,13 @@
       "total": 531,
       "theme": "#826CB0",
       "id": "89d7"
+    },
+    {
+      "id": null,
+      "name": "Hunger",
+      "target": 300,
+      "total": 0,
+      "theme": "#DDA0DD"
     }
   ],
   "colors": [

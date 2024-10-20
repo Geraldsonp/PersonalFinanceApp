@@ -1,7 +1,7 @@
 ﻿@page "/savings"
 <Page PageTitle="Savings">
     <Actions>
-        <Button>+ Add New Pot</Button>
+        <Button @onclick="() => IsCreateModalVisible = true">+ Add New Pot</Button>
     </Actions>
     <ChildContent>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -9,20 +9,49 @@
             @foreach (var pot in Pots)
             {
                 <div>
-                    <SavingPot Pot="@pot"></SavingPot>
+                    <SavingPotCard Pot="@pot" OnEdit="InitEditModal" OnDelete="InitDeleteModal"></SavingPotCard>
                 </div>
             }
         </div>
+        <CreatePotModal @bind-IsVisible="@IsCreateModalVisible" OnSubmit="CreatePot"></CreatePotModal>
+        <EditPotModal @bind-IsVisible="@IsEditModalVisible" OnSubmit="UpdatePot" Pot="@selectedPot"></EditPotModal>
     </ChildContent>
 </Page>
 @code {
 
-    public IEnumerable<Pot> Pots { get; set; } = new List<Pot>();
+    public List<Pot> Pots { get; set; } = new List<Pot>();
+
+    public bool IsCreateModalVisible { get; set; }
+    public bool IsEditModalVisible { get; set; }
+    public Pot? selectedPot { get; set; }
 
     [Inject] IPotsService? potService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Pots = await potService.GetAsync();
+        Pots = (await potService.GetAsync()).ToList();
+    }
+
+    private async Task CreatePot(Pot pot)
+    {
+        var result = await potService.PostAsync(pot);
+        Pots.Add(result);
+    }
+
+    private async Task UpdatePot(Pot pot)
+    {
+        var result = await potService.PutAsync(pot, pot.Id);
+        Pots[Pots.FindIndex(p => p.Id == pot.Id)] = result;
+    }
+
+    private async Task InitEditModal(Pot pot)
+    {
+        selectedPot = pot;
+        IsEditModalVisible = true;
+    }
+
+    private async Task InitDeleteModal(string pot)
+    {
+
     }
 }

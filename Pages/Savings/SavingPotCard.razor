@@ -16,8 +16,8 @@
                 @if (showMenu)
                 {
                     <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                        <button @onclick="() => OnEdit.InvokeAsync(Pot)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
-                        <button @onclick="() => OnDelete.InvokeAsync(Pot.Id)" class="block w-full text-left px-4 py-2 text-sm text-red hover:bg-gray-100">Delete</button>
+                        <button @onclick="OnEditClicked" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                        <button @onclick="OnDeleteClicked" class="block w-full text-left px-4 py-2 text-sm text-red hover:bg-gray-100">Delete</button>
                     </div>
                 }
             </div>
@@ -30,10 +30,10 @@
             </div>
 
             <div class="w-full bg-gray-200 rounded-full h-2.5">
-                <div class="h-2.5 rounded-full transition-all duration-500 ease-out" style="width: @ProgressPercentage%; background-color: @Pot.Theme"></div>
+                <div class="h-2.5 rounded-full transition-all duration-500 ease-out" style="width: @ProgressPercentage.ToString("F0")%; background-color: @Pot.Theme"></div>
             </div>
             <div class="flex justify-between text-sm text-gray-600 ">
-                <span class="font-bold">@ProgressPercentage%</span>
+                <span class="font-bold">@ProgressPercentage.ToLocalCurrency()%</span>
                 <span>Taget of $@Pot.Target.ToLocalCurrency()</span>
             </div>
         </div>
@@ -57,8 +57,8 @@
     private decimal amountToAdd;
     private bool showConfirmation;
 
-    private string ProgressPercentage =>
-    Math.Min(((decimal)Pot.Total /(decimal) Pot.Target) * 100, 100).ToString("N2");
+    private decimal ProgressPercentage =>
+        Math.Min(((decimal)Pot.Total / (decimal)Pot.Target) * 100, 100);
 
     private void ToggleMenu() => showMenu = !showMenu;
     
@@ -90,6 +90,16 @@
         showConfirmation = false;
         StateHasChanged();
     }
-
-
+    
+    private async Task OnEditClicked()
+    {
+        await OnEdit.InvokeAsync(Pot);
+        ToggleMenu();
+    }
+    
+    private async Task OnDeleteClicked()
+    {
+        await OnDelete.InvokeAsync(Pot.Id);
+        ToggleMenu();
+    }
 }

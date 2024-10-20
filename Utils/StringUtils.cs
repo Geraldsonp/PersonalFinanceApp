@@ -11,17 +11,17 @@ public static class StringUtils
 
     public static string ToLocalCurrency(this double value)
     {
-        return $"{value:C2}";
+        return $"{value:N2}";
     }
 
     public static string ToLocalCurrency(this decimal value)
     {
-        return $"{value:C2}";
+        return $"{value:F2}";
     }
 
     public static string ToLocalCurrency(this string value)
     {
-        return $"{value:C2}";
+        return $"{value:N2}";
     }
 
     public static string ToLocalCurrency(this int value)
