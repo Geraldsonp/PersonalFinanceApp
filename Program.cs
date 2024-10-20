@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using PersonalFinanceApp;
 using PersonalFinanceApp.Pages.Bills;
+using PersonalFinanceApp.Pages.Savings;
 using PersonalFinanceApp.Pages.Trasactions;
 using PersonalFinanceApp.Services;
 
@@ -17,6 +18,7 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IColorsService, ColorsService>();
 builder.Services.AddScoped<ICategoryService, CategoriesService>();
+builder.Services.AddScoped<IPotsService, PotService>();
 builder.Services.AddSingleton<AppState>();
 
 await builder.Build().RunAsync();

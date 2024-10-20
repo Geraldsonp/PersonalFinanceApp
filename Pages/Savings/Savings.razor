@@ -1,6 +1,28 @@
 ﻿@page "/savings"
-<h3>Savings</h3>
+<Page PageTitle="Savings">
+    <Actions>
+        <Button>+ Add New Pot</Button>
+    </Actions>
+    <ChildContent>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
+            @foreach (var pot in Pots)
+            {
+                <div>
+                    <SavingPot Pot="@pot"></SavingPot>
+                </div>
+            }
+        </div>
+    </ChildContent>
+</Page>
 @code {
 
+    public IEnumerable<Pot> Pots { get; set; } = new List<Pot>();
+
+    [Inject] IPotsService? potService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Pots = await potService.GetAsync();
+    }
 }
