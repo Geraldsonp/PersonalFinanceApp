@@ -1,0 +1,95 @@
+﻿@using PersonalFinanceApp.Components.Button
+@using PersonalFinanceApp.Components.InputField
+@using PersonalFinanceApp.Utils
+
+<div class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5 max-w-lg">
+    <div class="flex flex-col gap-10">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center gap-2">
+                <div style="background-color: @Pot.Theme" class="w-4 h-4 rounded-full "></div>
+                <h3 class="text-xl font-semibold text-gray-800">@Pot.Name</h3>
+            </div>
+            <div class="relative">
+                <button @onclick="ToggleMenu" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
+                    <IconComponent Icon="Icons.Elipsis" Class="w-5 h-5" />
+                </button>
+                @if (showMenu)
+                {
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                        <button @onclick="() => OnEdit.InvokeAsync(Pot)" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+                        <button @onclick="() => OnDelete.InvokeAsync(Pot.Id)" class="block w-full text-left px-4 py-2 text-sm text-red hover:bg-gray-100">Delete</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mb-4 flex flex-col gap-4">
+            <div class="flex justify-between text-sm">
+                <span class="text-sm text-gray-500">Total Saved</span>
+                <span class="text-2xl font-bold">$@Pot.Total.ToLocalCurrency()</span>
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="h-2.5 rounded-full transition-all duration-500 ease-out" style="width: @ProgressPercentage%; background-color: @Pot.Theme"></div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-600 ">
+                <span class="font-bold">@ProgressPercentage%</span>
+                <span>Taget of $@Pot.Target.ToLocalCurrency()</span>
+            </div>
+        </div>
+
+        <div class="flex justify-center mb-4 font-bold gap-4">
+            <button @onclick="() => AddFunds()" class="bg-beige-100  text-grey-900  py-3 px-12 md:px-14 rounded-md hover:bg-gray-100">+ Add Money</button>
+            <button @onclick="() => WithdrawFunds()" class="bg-beige-100  text-grey-900 py-3 px-12 md:px-14 rounded-md hover:bg-gray-100">Withdraw</button>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    [Parameter] public Pot Pot { get; set; } = new Pot();
+    [Parameter] public EventCallback<Pot> OnEdit { get; set; }
+    [Parameter] public EventCallback<string> OnDelete { get; set; }
+    [Parameter] public EventCallback<(string Id, decimal Amount)> OnAddFunds { get; set; }
+    [Parameter] public EventCallback<(string Id, decimal Amount)> OnWithdrawFunds { get; set; }
+
+    private bool showMenu;
+    private decimal amountToAdd;
+    private bool showConfirmation;
+
+    private string ProgressPercentage =>
+    Math.Min(((decimal)Pot.Total /(decimal) Pot.Target) * 100, 100).ToString("N2");
+
+    private void ToggleMenu() => showMenu = !showMenu;
+    
+
+    private async Task AddFunds()
+    {
+        if (amountToAdd > 0)
+        {
+            await OnAddFunds.InvokeAsync((Pot.Id, amountToAdd));
+            ShowConfirmation($"Added {amountToAdd:C2} to {Pot.Name}");
+            amountToAdd = 0;
+        }
+    }
+
+    private async Task WithdrawFunds()
+    {
+        if (amountToAdd > 0 && amountToAdd <= Pot.Total)
+        {
+            await OnWithdrawFunds.InvokeAsync((Pot.Id, amountToAdd));
+            ShowConfirmation($"Withdrawn {amountToAdd:C2} from {Pot.Name}");
+            amountToAdd = 0;
+        }
+    }
+
+    private async Task ShowConfirmation(string message)
+    {
+        showConfirmation = true;
+        await Task.Delay(3000);
+        showConfirmation = false;
+        StateHasChanged();
+    }
+
+
+}
