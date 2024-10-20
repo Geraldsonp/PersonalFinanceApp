@@ -1,0 +1,13 @@
+Title,Description,Priority,Status,Assignee,Labels
+Implement SavingsPotCard Component,Create a reusable component to display individual savings pots with progress visualization.,High,Todo,,"UI, Frontend"
+Develop SavingsPots Page Layout,Design and implement the main layout for the Savings Pots page including a list view of all savings pots.,High,Todo,,"UI, Frontend"
+Create Add New Savings Pot Modal,Implement a modal for adding new savings pots including form validation.,High,Todo,,"UI, Frontend"
+Implement Edit Savings Pot Functionality,Add the ability to edit existing savings pots including form validation.,Medium,Todo,,"Feature, Frontend"
+Develop Delete Savings Pot Confirmation Modal,Create a confirmation modal for deleting savings pots to prevent accidental deletions.,Medium,Todo,,"UI, Frontend"
+Implement Add Money to Pot Functionality,Create a UI and logic for adding money to a savings pot updating the current balance.,High,Todo,,"Feature, Frontend"
+Implement Withdraw Money from Pot Functionality,Create a UI and logic for withdrawing money from a savings pot updating the current balance.,High,Todo,,"Feature, Frontend"
+Integrate with Backend API,Connect the Savings Pots page with the backend API for CRUD operations.,High,Todo,,"Integration, Backend"
+Implement Error Handling and Loading States,Add proper error handling and loading indicators for a smooth user experience.,Medium,Todo,,"UX, Frontend"
+Implement Savings Goal Visualization,Add a visual representation of progress towards savings goals for each pot.,Low,Todo,,"UX, Frontend"
+Add Sorting and Filtering Options,Implement the ability to sort and filter savings pots based on various criteria.,Low,Todo,,"Feature, Frontend"
+Implement Keyboard Navigation,Ensure all functions on the Savings Pots page are accessible via keyboard navigation.,Medium,Todo,,"Accessibility, Frontend"

@@ -449,18 +449,67 @@
   ],
   "budgets": [
     {
-      "id": "4dab4fb1-6c7e-46e1-ac5c-e4366f6d09ec",
+      "id": "dbe440fb-473f-4411-ad56-2bd9b2c4870a",
       "name": null,
-      "category": "Dining Out",
-      "maximum": 350,
+      "category": "General",
+      "maximum": 144,
       "theme": "#FF0000"
     },
     {
-      "id": "d3a16f94-dd65-4266-afad-c64c1b929a57",
+      "id": "66b252a5-3464-4488-93b5-f0c8d9a78f89",
+      "name": null,
+      "category": "General",
+      "maximum": 111,
+      "theme": null
+    },
+    {
+      "id": "8b679933-30f3-41be-8219-b26ff8ee06a1",
+      "name": null,
+      "category": "Dining Out",
+      "maximum": 333,
+      "theme": "#0000FF"
+    },
+    {
+      "id": "5731051c-921a-4e2d-88e7-a8504a87c392",
+      "name": null,
+      "category": "Dining Out",
+      "maximum": 333,
+      "theme": "#00FF00"
+    },
+    {
+      "id": "f9f7cab8-94fe-4d4a-bf7a-c1ec43df1a8a",
+      "name": null,
+      "category": "Groceries",
+      "maximum": 222,
+      "theme": "#800080"
+    },
+    {
+      "id": "d764eb99-c507-432a-8395-575ab1332b63",
+      "name": null,
+      "category": "Groceries",
+      "maximum": 333,
+      "theme": null
+    },
+    {
+      "id": "8818b069-398e-43d3-80bc-ea426e842a7c",
       "name": null,
       "category": "Entertainment",
-      "maximum": 244,
-      "theme": "#00FF00"
+      "maximum": 111,
+      "theme": "#FFA500"
+    },
+    {
+      "id": "2d80dfad-c8d6-45da-a53c-3df3c630db55",
+      "name": null,
+      "category": "Education",
+      "maximum": 222,
+      "theme": "#FFC0CB"
+    },
+    {
+      "id": "0cbe8d1a-a7c3-4a38-a661-73977043d9ef",
+      "name": null,
+      "category": "Housing",
+      "maximum": 11,
+      "theme": "#008080"
     }
   ],
   "pots": [
