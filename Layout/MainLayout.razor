@@ -1,21 +1,27 @@
 ﻿@using System.Globalization
 @using PersonalFinanceApp.Services
+@using PersonalFinanceApp.LoadingStateManagment
+@using PersonalFinanceApp.ErrorHandling
 @inherits LayoutComponentBase
 @inject IJSRuntime Js
 @inject IColorsService ColorService
 @inject ICategoryService CategoryService
 
-<CascadingValue Value="colors">
-    <CascadingValue Value="categories">
-        <div class="antialiased bg-beige-100 flex flex-col-reverse md:flex-row ">
+<ErrorHandlerComponent>
+    <CascadingValue Value="colors">
+        <CascadingValue Value="categories">
+            <LoadingComponent></LoadingComponent>
+            <div class="antialiased bg-beige-100 flex flex-col-reverse md:flex-row ">
 
-            <SideBar></SideBar>
-            <main class="px-4 py-6 container mx-auto max-h-dvh overflow-y-auto scroll-smooth">
-                @Body
-            </main>
-        </div>
+                <SideBar></SideBar>
+                <main class="px-4 py-6 container mx-auto max-h-dvh overflow-y-auto scroll-smooth">
+                    @Body
+                </main>
+            </div>
+        </CascadingValue>
     </CascadingValue>
-</CascadingValue>
+</ErrorHandlerComponent>
+
 @code {
 
     private IEnumerable<Category> categories = new List<Category>();
@@ -37,5 +43,5 @@
             // CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("es-Do");
         }
     }
-}
 
+}

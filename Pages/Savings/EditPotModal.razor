@@ -43,7 +43,7 @@
 @code {
     [Parameter] public bool IsVisible { get; set; }
     [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
-    [Parameter] public Pot Pot { get; set; }
+    [Parameter] public Pot? Pot { get; set; }
     [Parameter] public EventCallback<Pot> OnSubmit { get; set; }
 
     private Pot editedPot = new Pot();

@@ -1,0 +1,35 @@
+﻿@* DeletePotModal.razor *@
+
+<Modal IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Title="Delete 'Savings'?" TitleCss="text-2xl font-bold" Size="Modal.ModalSize.Small" >
+    <p class="text-gray-500 text-sm mb-6">
+        Are you sure you want to delete this pot? This action cannot be reversed, and
+        all the data inside it will be removed forever.
+    </p>
+    <div class="flex flex-col space-y-3">
+        <Button OnClick="ConfirmDeletion" Variant="ButtonVariant.Destroy">
+            Yes, Confirm Deletion
+        </Button>
+        <Button OnClick="CloseModal" Variant="ButtonVariant.Secondary">
+            No, Go Back
+        </Button>
+    </div>
+</Modal>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public string PotName { get; set; } = "Savings";
+    [Parameter] public EventCallback OnConfirmDelete { get; set; }
+
+    private Task CloseModal()
+    {
+        return IsVisibleChanged.InvokeAsync(false);
+    }
+
+    private async Task ConfirmDeletion()
+    {
+        await OnConfirmDelete.InvokeAsync();
+        await CloseModal();
+    }
+
+}
