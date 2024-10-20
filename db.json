@@ -547,6 +547,13 @@
       "total": 531,
       "theme": "#826CB0",
       "id": "89d7"
+    },
+    {
+      "id": null,
+      "name": "Hunger",
+      "target": 300,
+      "total": 0,
+      "theme": "#DDA0DD"
     }
   ],
   "colors": [

@@ -1,0 +1,59 @@
+﻿@using PersonalFinanceApp.Components.Modal
+@using PersonalFinanceApp.Components.InputField
+@using PersonalFinanceApp.Components.Button
+@using PersonalFinanceApp.Components.Dropdown
+
+<Modal IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Title="Add New Pot" TitleCss="text-2xl font-bold" Size="Modal.ModalSize.Medium">
+
+    <ChildContent>
+        <p class="text-gray-500 text-sm mb-6">
+            Create a pot to set savings targets. These can help keep you on track as you save for special purchases.
+        </p>
+        <form @onsubmit="HandleSubmit">
+            <div class="space-y-4">
+                <div>
+                    <InputField TValue="string" @bind-Value="newPot.Name" Placeholder="e.g. Rainy Days" HelperText="@($"{30 - newPot.Name?.Length} characters left")" />
+                </div>
+                <div>
+                    <InputField TValue="int" @bind-Value="newPot.Target" Placeholder="e.g. 2000" Prefix="$" />
+                </div>
+                <div>
+                    <BasicDropDown Label="Theme" Options="@themeOptions" @bind-SelectedColor="newPot.Theme" Variant="DropdownVariant.ColorSelection" />
+                </div>
+            </div>
+            <div class="mt-6">
+                <Button Type="submit" Variant="ButtonVariant.Primary">
+                    Add Pot
+                </Button>
+            </div>
+        </form>
+    </ChildContent>
+</Modal>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public EventCallback<Pot> OnSubmit { get; set; }
+    [CascadingParameter]
+    public IEnumerable<Color> Colors { get; set; }
+
+    private Pot newPot = new Pot();
+    private List<DropdownOption<int>> themeOptions => Colors.Select(c => new DropdownOption<int>(c.Id, c.Name, $"{c.ColorCode}")).ToList();
+
+    private async Task HandleSubmit()
+    {
+        if (IsValid())
+        {
+            await OnSubmit.InvokeAsync(newPot);
+            newPot = new Pot();
+            await IsVisibleChanged.InvokeAsync(false);
+        }
+    }
+
+    private bool IsValid()
+    {
+        return !string.IsNullOrWhiteSpace(newPot.Name)
+        && newPot.Target > 0
+        && !string.IsNullOrWhiteSpace(newPot.Theme);
+    }
+}

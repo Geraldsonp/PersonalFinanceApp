@@ -1,7 +1,7 @@
 ﻿@page "/savings"
 <Page PageTitle="Savings">
     <Actions>
-        <Button>+ Add New Pot</Button>
+        <Button @onclick="() => IsCreateModalVisible = true">+ Add New Pot</Button>
     </Actions>
     <ChildContent>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -13,16 +13,25 @@
                 </div>
             }
         </div>
+        <CreatePotModal @bind-IsVisible="@IsCreateModalVisible" OnSubmit="CreatePot"></CreatePotModal>
     </ChildContent>
 </Page>
 @code {
 
     public IEnumerable<Pot> Pots { get; set; } = new List<Pot>();
 
+    public bool IsCreateModalVisible { get; set; }
+
     [Inject] IPotsService? potService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Pots = await potService.GetAsync();
+    }
+
+    private async Task CreatePot(Pot pot)
+    {
+        var result = await potService.PostAsync(pot);
+        Pots = Pots.Append(result);
     }
 }
