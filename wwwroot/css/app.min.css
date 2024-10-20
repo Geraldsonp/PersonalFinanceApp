@@ -1728,6 +1728,10 @@ input:checked + .toggle-bg{
   justify-content: space-between;
 }
 
+.gap-0\.5{
+  gap: 0.125rem;
+}
+
 .gap-1{
   gap: 0.25rem;
 }
@@ -1969,6 +1973,11 @@ input:checked + .toggle-bg{
 
 .bg-gray-900\/50{
   background-color: rgb(17 24 39 / 0.5);
+}
+
+.bg-green{
+  --tw-bg-opacity: 1;
+  background-color: rgb(39 124 120 / var(--tw-bg-opacity));
 }
 
 .bg-grey-900{
@@ -2438,6 +2447,26 @@ body {
   tbody>tr:last-child{
     border-style: none;
   }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  animation: slideIn 0.3s ease-out;
+}
+
+.progress-bar {
+  transition: width 0.5s ease-in-out;
 }
 
 .last\:border-b-0:last-child{

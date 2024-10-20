@@ -516,14 +516,14 @@
     {
       "name": "Savings",
       "target": 2000,
-      "total": 159,
+      "total": 182,
       "theme": "#800000",
       "id": "d9c0"
     },
     {
       "name": "Concert Ticket",
       "target": 150,
-      "total": 110,
+      "total": 113,
       "theme": "#626070",
       "id": "6195"
     },
@@ -537,7 +537,7 @@
     {
       "name": "New Laptop",
       "target": 1000,
-      "total": 10,
+      "total": 15,
       "theme": "#F2CDAC",
       "id": "a156"
     },
