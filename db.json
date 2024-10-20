@@ -517,7 +517,7 @@
       "name": "Savings",
       "target": 2000,
       "total": 159,
-      "theme": "#277C78",
+      "theme": "#800000",
       "id": "d9c0"
     },
     {
@@ -531,7 +531,7 @@
       "name": "Gift",
       "target": 150,
       "total": 110,
-      "theme": "#82C9D7",
+      "theme": "#FFFF00",
       "id": "e19e"
     },
     {

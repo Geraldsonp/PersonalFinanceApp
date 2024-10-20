@@ -84,9 +84,9 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
         var response = await _httpClient.PutAsJsonAsync(uri, obj);
 
         if (!response.IsSuccessStatusCode)
-            return await response.Content.ReadFromJsonAsync<T>();
-
-        throw new Exception(response.ReasonPhrase);
+            throw new Exception(response.ReasonPhrase);
+        
+        return await response.Content.ReadFromJsonAsync<T>();
     }
 
 }

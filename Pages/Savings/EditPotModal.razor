@@ -1,0 +1,88 @@
+﻿@using PersonalFinanceApp.Components.Modal
+@using PersonalFinanceApp.Components.InputField
+@using PersonalFinanceApp.Components.Button
+@using PersonalFinanceApp.Components.Dropdown
+
+<Modal IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Title="Edit Pot" Size="Modal.ModalSize.Medium">
+    <p class="text-gray-500 text-sm mb-6">
+        If your saving targets change, feel free to update your pots.
+    </p>
+    <form @onsubmit="HandleSubmit">
+        <div class="space-y-4">
+            <div>
+                <InputField
+                    TValue="string"
+                    @bind-Value="editedPot.Name"
+                    Placeholder="e.g. Concert Ticket"
+                    HelperText="@($"{30 - editedPot.Name?.Length} characters left")"/>
+            </div>
+            <div>
+                <InputField
+                    TValue="int"
+                    @bind-Value="editedPot.Target"
+                    Placeholder="e.g. 110.00"
+                    Prefix="$"/>
+            </div>
+            <div>
+                <BasicDropDown
+                    Label="Theme"
+                    Options="@themeOptions"
+                    SelectedValue="@(Colors.FirstOrDefault(x => x.ColorCode == editedPot.Theme)?.Id ?? 0)"
+                    @bind-SelectedColor="editedPot.Theme"
+                    Variant="DropdownVariant.ColorSelection"/>
+            </div>
+        </div>
+        <div class="mt-6">
+            <Button Type="submit" Variant="ButtonVariant.Primary">
+                Save Changes
+            </Button>
+        </div>
+    </form>
+</Modal>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public Pot Pot { get; set; }
+    [Parameter] public EventCallback<Pot> OnSubmit { get; set; }
+
+    private Pot editedPot = new Pot();
+    [CascadingParameter] private IEnumerable<Color> Colors { get; set; }
+
+    private List<DropdownOption<int>> themeOptions => Colors
+        .Select(color => new DropdownOption<int>(color.Id, color.Name, color.ColorCode))
+        .ToList();
+
+    protected override void OnParametersSet()
+    {
+        if (Pot != null)
+        {
+            editedPot = new Pot
+            {
+                Id = Pot.Id,
+                Name = Pot.Name,
+                Target = Pot.Target,
+                Total = Pot.Total,
+                Theme = Pot.Theme
+            };
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (IsValid())
+        {
+            await OnSubmit.InvokeAsync(editedPot);
+            await IsVisibleChanged.InvokeAsync(false);
+        }
+    }
+
+    private bool IsValid()
+    {
+        return !string.IsNullOrWhiteSpace(editedPot.Name)
+               && editedPot.Name.Length <= 30
+               && editedPot.Target > 0
+               && !string.IsNullOrWhiteSpace(editedPot.Theme);
+    }
+
+}
