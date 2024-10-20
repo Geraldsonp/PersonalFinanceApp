@@ -2,7 +2,7 @@
 @using PersonalFinanceApp.Components.InputField
 @using PersonalFinanceApp.Utils
 
-<div class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5 max-w-lg">
+<div class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-0.5 ">
     <div class="flex flex-col gap-10">
         <div class="flex justify-between items-center mb-4">
             <div class="flex items-center gap-2">
@@ -11,7 +11,7 @@
             </div>
             <div class="relative">
                 <button @onclick="ToggleMenu" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                    <IconComponent Icon="Icons.Elipsis" Class="w-5 h-5" />
+                    <IconComponent Icon="Icons.Elipsis" Class="w-5 h-5"/>
                 </button>
                 @if (showMenu)
                 {
@@ -39,8 +39,8 @@
         </div>
 
         <div class="flex justify-center mb-4 font-bold gap-4">
-            <button @onclick="() => AddFunds()" class="bg-beige-100  text-grey-900  py-3 px-12 md:px-14 rounded-md hover:bg-gray-100">+ Add Money</button>
-            <button @onclick="() => WithdrawFunds()" class="bg-beige-100  text-grey-900 py-3 px-12 md:px-14 rounded-md hover:bg-gray-100">Withdraw</button>
+            <button @onclick="() => OnAddFunds.InvokeAsync(Pot.Id)" class="bg-beige-100  text-grey-900  py-3 px-12 md:px-14 rounded-md hover:bg-gray-100">+ Add Money</button>
+            <button @onclick="() => OnWithdrawClicked.InvokeAsync(Pot.Id)" class="bg-beige-100  text-grey-900 py-3 px-12 md:px-14 rounded-md hover:bg-gray-100">Withdraw</button>
         </div>
 
     </div>
@@ -50,56 +50,29 @@
     [Parameter] public Pot Pot { get; set; } = new Pot();
     [Parameter] public EventCallback<Pot> OnEdit { get; set; }
     [Parameter] public EventCallback<string> OnDelete { get; set; }
-    [Parameter] public EventCallback<(string Id, decimal Amount)> OnAddFunds { get; set; }
-    [Parameter] public EventCallback<(string Id, decimal Amount)> OnWithdrawFunds { get; set; }
+    [Parameter] public EventCallback<string> OnAddFunds { get; set; }
+    [Parameter] public EventCallback<string> OnWithdrawClicked { get; set; }
+
 
     private bool showMenu;
-    private decimal amountToAdd;
-    private bool showConfirmation;
+
 
     private decimal ProgressPercentage =>
         Math.Min(((decimal)Pot.Total / (decimal)Pot.Target) * 100, 100);
 
     private void ToggleMenu() => showMenu = !showMenu;
-    
 
-    private async Task AddFunds()
-    {
-        if (amountToAdd > 0)
-        {
-            await OnAddFunds.InvokeAsync((Pot.Id, amountToAdd));
-            ShowConfirmation($"Added {amountToAdd:C2} to {Pot.Name}");
-            amountToAdd = 0;
-        }
-    }
 
-    private async Task WithdrawFunds()
-    {
-        if (amountToAdd > 0 && amountToAdd <= Pot.Total)
-        {
-            await OnWithdrawFunds.InvokeAsync((Pot.Id, amountToAdd));
-            ShowConfirmation($"Withdrawn {amountToAdd:C2} from {Pot.Name}");
-            amountToAdd = 0;
-        }
-    }
-
-    private async Task ShowConfirmation(string message)
-    {
-        showConfirmation = true;
-        await Task.Delay(3000);
-        showConfirmation = false;
-        StateHasChanged();
-    }
-    
     private async Task OnEditClicked()
     {
         await OnEdit.InvokeAsync(Pot);
         ToggleMenu();
     }
-    
+
     private async Task OnDeleteClicked()
     {
         await OnDelete.InvokeAsync(Pot.Id);
         ToggleMenu();
     }
+
 }

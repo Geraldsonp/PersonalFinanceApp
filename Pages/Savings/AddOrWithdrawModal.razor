@@ -1,0 +1,66 @@
+﻿@implements IDisposable
+<Modal IsVisible="@IsVisible" IsVisibleChanged="@IsVisibleChanged" Title="@ModalLabel" TitleCss="text-2xl font-bold" Size="Modal.ModalSize.Large" OnClose="Dispose">
+    <p class="text-gray-500 text-sm mb-4">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet.
+    </p>
+
+    <div class="mb-4">
+        <div class="flex justify-between items-center">
+            <span class="text-sm text-gray-500">New Amount</span>
+            <span class="text-2xl font-bold">$@newAmount.ToString("F2")</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+            <div class="flex gap-0.5">
+                <div class="bg-gray-900 h-2.5 rounded-l-lg " style="width: @currentPercentage.ToString("F0")%"></div>
+                <div class="@(Type == TransactionType.Add ? "bg-green" : "bg-red") h-2.5 rounded-r-lg" style="width: @percentage.ToString("F0")%"></div>
+            </div>
+        </div>
+        <div class="flex justify-between items-center mt-1">
+            <span class="text-sm text-green font-semibold @(Type == TransactionType.Add ? "text-green" : "text-red")">@currentPercentagePlusNewPercentage.ToString("F2")%</span>
+            <span class="text-sm text-gray-500">Target of $@TargetAmount.ToString("F2")</span>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <label class="text-gray-500 text-sm">Amount to @(Type == TransactionType.Add ? "add" : "withdraw")</label>
+        <InputField
+            Type="number"
+            @bind-Value="amount"
+            Placeholder="Enter amount"/>
+    </div>
+
+    <Button OnClick="@HandleConfirm" Variant="ButtonVariant.Primary">
+        Confirm @(Type == TransactionType.Add ? "Addition" : "Withdrawal")
+    </Button>
+</Modal>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public decimal CurrentAmount { get; set; }
+    [Parameter] public decimal TargetAmount { get; set; }
+    [Parameter] public TransactionType Type { get; set; }
+    [Parameter] public EventCallback<(TransactionType, decimal)> OnConfirm { get; set; }
+    private string ModalLabel => Type == TransactionType.Add ? "Add Money" : "Withdraw Money";
+    private string StateTracker { get; set; }
+
+    private decimal amount;
+    private decimal newAmount => Type == TransactionType.Add ? CurrentAmount + amount : CurrentAmount - amount;
+    private decimal percentage => TargetAmount > 0 ? (amount / TargetAmount) * 100 : 0;
+    private decimal currentPercentage => TargetAmount > 0 ? (CurrentAmount / TargetAmount) * 100 : 0;
+    private decimal currentPercentagePlusNewPercentage => currentPercentage + percentage;
+
+    private async Task HandleConfirm()
+    {
+        await OnConfirm.InvokeAsync((Type, amount));
+        await IsVisibleChanged.InvokeAsync(false);
+        Dispose();
+    }
+
+    public void Dispose()
+    {
+        amount = 0;
+        StateTracker = Guid.NewGuid().ToString();
+    }
+
+}
