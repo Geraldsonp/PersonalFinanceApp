@@ -1,0 +1,29 @@
+﻿@inject IErrorHandler ErrorHandler
+
+<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        @ChildContent
+    </ChildContent>
+    <ErrorContent>
+        <div class="error-container">
+            <p>An error has occurred. Please try again later.</p>
+        </div>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    private ErrorBoundary errorBoundary;
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+
+    private void HandleError(Exception ex)
+    {
+        ErrorHandler.HandleError(ex);
+    }
+
+}
