@@ -10,11 +10,11 @@ public class TransactionFilterAndSorting
     private readonly int _pageSize;
     private readonly bool _isAscending;
 
-    public TransactionFilterAndSorting(IEnumerable<Transaction> transactions, string searchTerm, int categoryFilter, string sortBy, int currentPage, int pageSize)
+    public TransactionFilterAndSorting(IEnumerable<Transaction> transactions, string searchTerm, string categoryFilter, string sortBy, int currentPage, int pageSize)
     {
         _transactions = transactions;
         _searchTerm = searchTerm;
-        _categoryFilter = categoryFilter.ToString();
+        _categoryFilter = categoryFilter;
         _sortBy = sortBy;
         _currentPage = currentPage;
         _pageSize = pageSize;

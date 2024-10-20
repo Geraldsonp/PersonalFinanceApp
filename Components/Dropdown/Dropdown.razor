@@ -32,7 +32,7 @@
 
         @if (IsOpen)
         {
-            <div class="absolute z-10 right-0 w-full mt-1 bg-white border border-gray-100 rounded shadow-lg" style="min-width: 172px;">
+            <div class="absolute z-10 right-0 w-full max-h-96 mt-1 bg-white border border-gray-100 rounded shadow-lg overflow-y-auto" style="min-width: 172px;">
                 @foreach (var option in Options)
                 {
                     <button @onclick="() => SelectOption(option)" class="block w-full border-b border-gray-100 text-left px-4 py-2 hover:bg-gray-100 text-sm @(option.Value.Equals(SelectedValue) ? "bg-gray-100 font-bold" : "")" style="min-width: 172px;">

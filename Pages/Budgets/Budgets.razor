@@ -1,6 +1,7 @@
 ﻿@page "/Budget"
 @using PersonalFinanceApp.Components.Button
 @using PersonalFinanceApp.Pages.Trasactions
+@using System.Collections.ObjectModel
 @inject IBudgetService BudgetService
 @inject ITransactionService TransactionService
 
@@ -11,10 +12,10 @@
     <ChildContent>
         <div class="flex flex-col gap-5 lg:flex-row md:w-full ">
             <div>
-                <BudgetCardSummarry SpendingSummary="@GetSpendingSummaries()"></BudgetCardSummarry>
+                <BudgetCardSummarry SpendingSummary="GetSpendingSummaries"></BudgetCardSummarry>
             </div>
             <div class="flex-1">
-                @foreach (var budget in GetSpendingSummaries())
+                @foreach (var budget in GetSpendingSummaries)
                 {
                     <BudgetDetailsCard OnDeleteClicked="OpenDeleteModal" OnEditClicked="OpenEditModal" Summary="budget" LatestTransactions="@transactions.Where(t => t.Category == budget.Category).Take(5)"></BudgetDetailsCard>
                 }
@@ -22,12 +23,12 @@
         </div>
     </ChildContent>
 </Page>
-<AddNewBudgetModal @ref="AddOrEditModal" OnSubmit="@CreateBudget" IsVisible="showModal" IsVisibleChanged="@((bool visible) => showModal = visible)" />
+<AddNewBudgetModal OnSubmit="@CreateBudget" @bind-IsVisible="showModal"  />
 <DeleteBudgetConfimarionModal @bind-IsVisible="ShowDeleteModal" OnDelete="DeleteBudget" BudgetId="@selectedBudget.Id" BudgetName="@selectedBudget.Category"></DeleteBudgetConfimarionModal>
 <EditBudgetModal @bind-IsVisible="ShowEditModal" OnSubmit="@UpdateBudget" Model="@selectedBudget"></EditBudgetModal>
 @code {
     private bool showModal = false;
-    private List<Budget> budgets = new List<Budget>();
+    private ObservableCollection<Budget> budgets = new ObservableCollection<Budget>();
     private Budget selectedBudget = new Budget();
     private bool ShowDeleteModal { get; set; }
     private bool ShowEditModal { get; set; }
@@ -40,15 +41,15 @@
         var _budgets = await BudgetService.GetAsync();
         var _transactions = await TransactionService.GetAsync();
 
-        budgets = _budgets.ToList();
+        budgets = new ObservableCollection<Budget>(_budgets);
         transactions = _transactions.ToList();
     }
 
-
     private async Task CreateBudget(Budget newBudget)
     {
-        await BudgetService.PostAsync(newBudget);
-        budgets.Add(newBudget);
+        var budget = await BudgetService.PostAsync(newBudget);
+        budgets.Add(budget);
+        StateHasChanged();
     }
 
     private async Task OpenEditModal(string id)
@@ -59,7 +60,7 @@
     private async Task UpdateBudget(Budget updatedBudget)
     {
         await BudgetService.PutAsync(updatedBudget, selectedBudget.Id);
-        var index = budgets.FindIndex(b => b.Id == updatedBudget.Id);
+        var index = budgets.IndexOf(selectedBudget);
         if (index != -1)
         {
             budgets[index] = updatedBudget;
@@ -74,24 +75,22 @@
     private async Task DeleteBudget(string id)
     {
         await BudgetService.DeleteAsync(id);
-        budgets.RemoveAll(b => b.Id == id);
+        budgets.Remove(budgets.FirstOrDefault(b => b.Id == id));
     }
 
-    private List<SpendingSummary> GetSpendingSummaries()
-    {
-        return budgets
-        .DistinctBy(b => b.Category)
-        .Select(b => new SpendingSummary
-            {
-                Id = b.Id,
-                Name = b.Name,
-                Category = b.Category,
-                Limit = b.Maximum,
-                Color = b.Theme,
-                Spent = transactions
-            .Where(t => t.Category == b.Category && t.Amount < 0)
-            .Sum(t => t.Amount * -1)
-            })
-        .ToList();
-    }
+    private List<SpendingSummary> GetSpendingSummaries =>
+    budgets
+    .DistinctBy(b => b.Category)
+    .Select(b => new SpendingSummary
+        {
+            Id = b.Id,
+            Name = b.Name,
+            Category = b.Category,
+            Limit = b.Maximum,
+            Color = b.Theme,
+            Spent = transactions
+        .Where(t => t.Category == b.Category && t.Amount < 0)
+        .Sum(t => t.Amount * -1)
+        })
+    .ToList();
 }
