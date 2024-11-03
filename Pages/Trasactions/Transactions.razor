@@ -6,11 +6,11 @@
     </Card>
 </Page>
 @code {
-    public IEnumerable<Transaction> TransactionsList { get; set; } = new List<Transaction>();
+    public IList<Transaction> TransactionsList { get; set; } = new List<Transaction>();
     [Inject] ITransactionService? transactionService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        TransactionsList = await transactionService?.GetAsync();
+        TransactionsList = (await transactionService?.GetAsync()).ToList();
     }
 }

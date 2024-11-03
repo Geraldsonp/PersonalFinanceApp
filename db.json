@@ -789,5 +789,159 @@
       "id": "20",
       "name": "Pets"
     }
+  ],
+  "bills":[
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }, {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -38.5,
+      "isPaid": false
+    },
+    {
+      "avatar": "./assets/images/avatars/urban-services-hub.jpg",
+      "name": "Sun Park",
+      "category": "General",
+      "dueDate": "2024-07-18T19:20:23Z",
+      "amount": -55.5,
+      "isPaid": true
+    }
   ]
 }

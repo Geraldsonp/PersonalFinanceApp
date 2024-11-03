@@ -42,8 +42,7 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
         {
             return await response.Content.ReadFromJsonAsync<List<T>>();
         }
-
-        throw new Exception(response.ReasonPhrase);
+        return new List<T>();
     }
 
     public async Task<T> GetAsync(TKey id)
@@ -55,7 +54,7 @@ public abstract class GenericApiService<T, TKey> : IApiService<T, TKey> where T 
             return await response.Content.ReadFromJsonAsync<T>();
         }
 
-        throw new Exception(response.ReasonPhrase);
+        return null;
     }
 
     public async Task<T> PostAsync(T obj)

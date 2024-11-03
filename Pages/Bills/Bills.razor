@@ -1,6 +1,37 @@
 ﻿@inject IBillsService billsService
 @page "/bills"
-<h3>Bills</h3>
+<h3 class="font-bold  text-2xl mb-10 text-gray-900">Recurring Bills</h3>
+<div class="flex flex-col xl:flex-row gap-4 justify-start xl:items-baseline">
+    <div class="flex flex-col gap-4 sm:flex-row xl:flex-col ">
+        <div class="bg-gray-950 xl:min-w-[300px]  flex-auto rounded-lg shadow-md  p-6 flex flex-row gap-4 items-center md:flex-col md:items-start">
+            <IconComponent Icon="Icons.Bill" Class="w-12 h-12 text-gray-300"></IconComponent>
+            <div class="flex flex-col mt-4">
+                <h3 class="text-lg font-semibold text-gray-300">Bills</h3>
+                <span class="text-3xl font-bold text-gray-300">$@_bills.Sum(b => Math.Abs(b.Amount)).ToString("F2")</span>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 flex-auto">
+            <div class="flex flex-col gap-3">
+                <h3 class="text-lg font-semibold text-gray-900">Summary</h3>
+                <div class="flex gap-3 justify-between items-center border-b border-gray-200 pb-3">
+                    <p>Paid Bills</p>
+                    <p>@_bills.Where(b => b.IsPaid).Sum(b => Math.Abs(b.Amount)).ToString("F2")</p>
+                </div>
+                <div class="flex gap-3 justify-between items-center border-b border-gray-200 pb-3">
+                    <p>Total Upcoming</p>
+                    <p>@_bills.Where(b => !b.IsPaid && b.DueDate > DateTime.Now).Sum(b => Math.Abs(b.Amount)).ToString("F2")</p>
+                </div>
+                <div class="flex gap-3 justify-between items-center pb-3">
+                    <p>Total Due</p>
+                    <p>@_bills.Where(b => b.IsPaid && b.DueDate < DateTime.Now).Sum(b => Math.Abs(b.Amount)).ToString("F2")</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <RecurringBillsList Bills=@_bills></RecurringBillsList>
+</div>
+
 
 @code {
     private IEnumerable<Bill> _bills = new List<Bill>();

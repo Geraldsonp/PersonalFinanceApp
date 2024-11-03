@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Components\Modal\" />
-    <Folder Include="State\" />
   </ItemGroup>
 
 </Project>
