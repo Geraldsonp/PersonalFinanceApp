@@ -25,6 +25,7 @@ builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IColorsService, ColorsService>();
 builder.Services.AddScoped<ICategoryService, CategoriesService>();
 builder.Services.AddScoped<IPotsService, PotService>();
+builder.Services.AddScoped<IBillsService, BillService>();
 builder.Services.AddSingleton<IErrorHandler, GlobalErrorHandler>();
 builder.Services.AddSingleton<LoadingService>();
 
