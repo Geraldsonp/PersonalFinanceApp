@@ -790,157 +790,165 @@
       "name": "Pets"
     }
   ],
-  "bills":[
+  "bills": [
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "name": "Mountain View Plaza",
+      "category": "Utilities",
+      "dueDate": "2024-08-12T14:30:00Z",
+      "amount": -127.85,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Green Gardens Complex",
+      "category": "Maintenance",
+      "dueDate": "2024-09-03T10:15:00Z",
+      "amount": -89.99,
       "isPaid": true
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "name": "Urban Heights",
+      "category": "Security",
+      "dueDate": "2024-08-25T16:45:00Z",
+      "amount": -156.50,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Riverside Apartments",
+      "category": "Parking",
+      "dueDate": "2024-07-30T09:20:00Z",
+      "amount": -45.75,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
+      "name": "Central Park Building",
       "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "dueDate": "2024-08-15T11:30:00Z",
+      "amount": -198.25,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Sunset Towers",
+      "category": "Maintenance",
+      "dueDate": "2024-09-18T13:45:00Z",
+      "amount": -167.30,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "name": "Harbor View Complex",
+      "category": "Security",
+      "dueDate": "2024-08-08T15:20:00Z",
+      "amount": -134.90,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Pine Valley Residences",
+      "category": "Utilities",
+      "dueDate": "2024-09-22T08:15:00Z",
+      "amount": -78.45,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
+      "name": "Metropolitan Gardens",
       "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "dueDate": "2024-08-30T12:10:00Z",
+      "amount": -223.15,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Oakwood Commons",
+      "category": "Parking",
+      "dueDate": "2024-09-11T16:30:00Z",
+      "amount": -92.60,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "name": "Lakeside Apartments",
+      "category": "Maintenance",
+      "dueDate": "2024-08-19T10:45:00Z",
+      "amount": -145.75,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "City Center Plaza",
+      "category": "Security",
+      "dueDate": "2024-09-28T14:20:00Z",
+      "amount": -187.90,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "name": "Forest Hills Complex",
+      "category": "Utilities",
+      "dueDate": "2024-08-05T11:25:00Z",
+      "amount": -112.35,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
+      "name": "Skyline Towers",
       "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "dueDate": "2024-09-14T09:40:00Z",
+      "amount": -167.80,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "name": "Riverfront Plaza",
+      "category": "Parking",
+      "dueDate": "2024-08-22T15:55:00Z",
+      "amount": -56.25,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Parkview Heights",
+      "category": "Maintenance",
+      "dueDate": "2024-09-07T12:35:00Z",
+      "amount": -198.45,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "name": "Highland Gardens",
+      "category": "Security",
+      "dueDate": "2024-08-16T10:50:00Z",
+      "amount": -143.70,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Valley View Complex",
+      "category": "Utilities",
+      "dueDate": "2024-09-25T14:15:00Z",
+      "amount": -89.95,
       "isPaid": true
-    }, {
+    },
+    {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
+      "name": "Coastal Living",
       "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -38.5,
+      "dueDate": "2024-08-28T11:05:00Z",
+      "amount": -176.20,
       "isPaid": false
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
-      "name": "Sun Park",
-      "category": "General",
-      "dueDate": "2024-07-18T19:20:23Z",
-      "amount": -55.5,
+      "name": "Evergreen Towers",
+      "category": "Parking",
+      "dueDate": "2024-09-19T13:25:00Z",
+      "amount": -67.85,
       "isPaid": true
     }
   ]

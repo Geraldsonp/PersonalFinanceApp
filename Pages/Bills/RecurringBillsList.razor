@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var bill in filteredTransactions())
+            @foreach (var bill in filteredBills)
             {
                 <tr class="hidden sm:table-row border-b hover:bg-gray-50 hover:cursor-pointer">
                     <td class="flex items-center text-preset-4-bold text-gray-900">
@@ -57,7 +57,7 @@
     </table>
 
     <div class="mt-4 ">
-        <Pagger CurrentPage="@currentPage" TotalItems="@Bills.Count()" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage" PaginationRange="4"></Pagger>
+        <Pagger CurrentPage="@currentPage" TotalItems="@totalItems" ItemsPerPage="@pageSize" OnPageChanged="@ChangePage" PaginationRange="4"></Pagger>
     </div>
 </div>
 
@@ -69,7 +69,7 @@
     private string sortBy = "latest";
     private int currentPage = 1;
     private int pageSize = 8;
-    private int totalPages => (int)Math.Ceiling((double)Bills.Count() / pageSize);
+    private int totalItems => searchTerm.Length > 0 ? filteredBills.Count() : Bills.Count();
     private List<DropdownOption<string>> sortOptions = new List<DropdownOption<string>>
 {
 new DropdownOption<string>("latest", "Latest"),
@@ -80,16 +80,12 @@ new DropdownOption<string>("highest", "Highest"),
 new DropdownOption<string>("lowest", "Lowest")
 };
     private List<DropdownOption<string>> categoryOptions => Categories.Select(c => new DropdownOption<string>(c.Name, c.Name)).Distinct().ToList();
-    protected override async Task OnInitializedAsync()
+    private IEnumerable<Bill> filteredBills => GetSortedAndFilteredTransactions(searchTerm, sortBy, currentPage, pageSize);
+
+    protected override async Task OnParametersSetAsync()
     {
 
-    }
-
-
-
-    private List<Bill> filteredTransactions()
-    {
-        return Bills.OrderBy(t => t.Category).ToList();
+        await base.OnParametersSetAsync();
     }
 
     private void HandleSearch(string searchTerm)
@@ -100,6 +96,34 @@ new DropdownOption<string>("lowest", "Lowest")
     private void ChangePage(int pageNumber)
     {
         currentPage = pageNumber;
+    }
+
+    private IEnumerable<Bill> GetSortedAndFilteredTransactions(string searchTerm, string sortBy, int currentPage, int pageSize)
+    {
+        // First filter
+        var filtered = Bills.Where(b =>
+        string.IsNullOrEmpty(searchTerm) ||
+        b.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+
+        // Then sort
+        var sorted = sortBy switch
+        {
+            "oldest" => filtered.OrderBy(b => b.DueDate),
+            "latest" => filtered.OrderByDescending(b => b.DueDate),
+            "a-to-z" => filtered.OrderBy(b => b.Name),
+            "z-to-a" => filtered.OrderByDescending(b => b.Name),
+            "highest" => filtered.OrderByDescending(b => b.Amount),
+            "lowest" => filtered.OrderBy(b => b.Amount),
+            _ => filtered.OrderByDescending(b => b.DueDate) // default to latest
+        };
+
+        // Then paginate
+        var paginated = sorted
+        .Skip((currentPage - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
+
+        return paginated.ToList();
     }
 
 }
