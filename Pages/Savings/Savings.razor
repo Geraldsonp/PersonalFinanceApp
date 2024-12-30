@@ -16,7 +16,7 @@
         @if (selectedPot != null)
         {
             <EditPotModal @bind-IsVisible="@IsEditModalVisible" OnSubmit="UpdatePot" Pot="@selectedPot"></EditPotModal>
-            <AddOrWithdrawModal @bind-IsVisible="@IsAddOrWithdrawVisible" CurrentAmount="selectedPot.Total" TargetAmount="selectedPot.Target" Type="transactionType" OnConfirm="HandleTransactionConfirmed"></AddOrWithdrawModal>
+            <AddOrWithdrawModal @bind-IsVisible="@IsAddOrWithdrawVisible" CurrentAmount="selectedPot.Total" TargetAmount="selectedPot.Target" Type="_movementType" OnConfirm="HandleTransactionConfirmed"></AddOrWithdrawModal>
             <DeleteSavingModal @bind-IsVisible="@IsDeleteModalVisible" OnConfirmDelete="HandleDeleteConfirmed" PotName="@selectedPot.Name"></DeleteSavingModal>
         }
     </ChildContent>
@@ -29,7 +29,7 @@
     public bool IsCreateModalVisible { get; set; }
     public bool IsEditModalVisible { get; set; }
     public Pot? selectedPot { get; set; } = new Pot();
-    private TransactionType transactionType = TransactionType.Add;
+    private MovementType _movementType = MovementType.Add;
     private bool IsAddOrWithdrawVisible = false;
     private bool IsDeleteModalVisible = false;
     private void ToggleAddOrWithdraw() => IsAddOrWithdrawVisible = !IsAddOrWithdrawVisible;
@@ -78,21 +78,21 @@
     private async Task HandleAddFundsClick(string id)
     {
         selectedPot = Pots.Find(p => p.Id == id);
-        transactionType = TransactionType.Add;
+        _movementType = MovementType.Add;
         ToggleAddOrWithdraw();
     }
 
     private async Task HandleWithdrawFundsClick(string id)
     {
         selectedPot = Pots.Find(p => p.Id == id);
-        transactionType = TransactionType.Withdraw;
+        _movementType = MovementType.Withdraw;
         ToggleAddOrWithdraw();
     }
 
 
-    private async Task HandleTransactionConfirmed((TransactionType, decimal) transaction)
+    private async Task HandleTransactionConfirmed((MovementType, decimal) transaction)
     {
-        if (transaction.Item1 == TransactionType.Add)
+        if (transaction.Item1 == MovementType.Add)
         {
             selectedPot.Total += (int)transaction.Item2;
         }

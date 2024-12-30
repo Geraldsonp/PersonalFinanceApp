@@ -547,13 +547,6 @@
       "total": 531,
       "theme": "#826CB0",
       "id": "89d7"
-    },
-    {
-      "id": null,
-      "name": "Hunger",
-      "target": 300,
-      "total": 0,
-      "theme": "#DDA0DD"
     }
   ],
   "colors": [
@@ -797,7 +790,8 @@
       "category": "Utilities",
       "dueDate": "2024-08-12T14:30:00Z",
       "amount": -127.85,
-      "isPaid": false
+      "isPaid": false,
+      "id": "90db"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -805,15 +799,17 @@
       "category": "Maintenance",
       "dueDate": "2024-09-03T10:15:00Z",
       "amount": -89.99,
-      "isPaid": true
+      "isPaid": true,
+      "id": "2d37"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "Urban Heights",
       "category": "Security",
       "dueDate": "2024-08-25T16:45:00Z",
-      "amount": -156.50,
-      "isPaid": false
+      "amount": -156.5,
+      "isPaid": false,
+      "id": "8254"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -821,7 +817,8 @@
       "category": "Parking",
       "dueDate": "2024-07-30T09:20:00Z",
       "amount": -45.75,
-      "isPaid": true
+      "isPaid": true,
+      "id": "2af4"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -829,23 +826,26 @@
       "category": "General",
       "dueDate": "2024-08-15T11:30:00Z",
       "amount": -198.25,
-      "isPaid": false
+      "isPaid": false,
+      "id": "6592"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "Sunset Towers",
       "category": "Maintenance",
       "dueDate": "2024-09-18T13:45:00Z",
-      "amount": -167.30,
-      "isPaid": true
+      "amount": -167.3,
+      "isPaid": true,
+      "id": "1a6c"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "Harbor View Complex",
       "category": "Security",
       "dueDate": "2024-08-08T15:20:00Z",
-      "amount": -134.90,
-      "isPaid": false
+      "amount": -134.9,
+      "isPaid": false,
+      "id": "3a94"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -853,7 +853,8 @@
       "category": "Utilities",
       "dueDate": "2024-09-22T08:15:00Z",
       "amount": -78.45,
-      "isPaid": true
+      "isPaid": true,
+      "id": "94a4"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -861,15 +862,17 @@
       "category": "General",
       "dueDate": "2024-08-30T12:10:00Z",
       "amount": -223.15,
-      "isPaid": false
+      "isPaid": false,
+      "id": "f1e8"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "Oakwood Commons",
       "category": "Parking",
       "dueDate": "2024-09-11T16:30:00Z",
-      "amount": -92.60,
-      "isPaid": true
+      "amount": -92.6,
+      "isPaid": true,
+      "id": "d0b2"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -877,15 +880,17 @@
       "category": "Maintenance",
       "dueDate": "2024-08-19T10:45:00Z",
       "amount": -145.75,
-      "isPaid": false
+      "isPaid": false,
+      "id": "6b44"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "City Center Plaza",
       "category": "Security",
       "dueDate": "2024-09-28T14:20:00Z",
-      "amount": -187.90,
-      "isPaid": true
+      "amount": -187.9,
+      "isPaid": true,
+      "id": "d61a"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -893,15 +898,17 @@
       "category": "Utilities",
       "dueDate": "2024-08-05T11:25:00Z",
       "amount": -112.35,
-      "isPaid": false
+      "isPaid": false,
+      "id": "de03"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "Skyline Towers",
       "category": "General",
       "dueDate": "2024-09-14T09:40:00Z",
-      "amount": -167.80,
-      "isPaid": true
+      "amount": -167.8,
+      "isPaid": true,
+      "id": "cbc2"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -909,7 +916,8 @@
       "category": "Parking",
       "dueDate": "2024-08-22T15:55:00Z",
       "amount": -56.25,
-      "isPaid": false
+      "isPaid": false,
+      "id": "63e0"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -917,15 +925,17 @@
       "category": "Maintenance",
       "dueDate": "2024-09-07T12:35:00Z",
       "amount": -198.45,
-      "isPaid": true
+      "isPaid": true,
+      "id": "c02d"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "Highland Gardens",
       "category": "Security",
       "dueDate": "2024-08-16T10:50:00Z",
-      "amount": -143.70,
-      "isPaid": false
+      "amount": -143.7,
+      "isPaid": false,
+      "id": "a1f1"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -933,15 +943,17 @@
       "category": "Utilities",
       "dueDate": "2024-09-25T14:15:00Z",
       "amount": -89.95,
-      "isPaid": true
+      "isPaid": true,
+      "id": "4b1b"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
       "name": "Coastal Living",
       "category": "General",
       "dueDate": "2024-08-28T11:05:00Z",
-      "amount": -176.20,
-      "isPaid": false
+      "amount": -176.2,
+      "isPaid": false,
+      "id": "0c57"
     },
     {
       "avatar": "./assets/images/avatars/urban-services-hub.jpg",
@@ -949,7 +961,8 @@
       "category": "Parking",
       "dueDate": "2024-09-19T13:25:00Z",
       "amount": -67.85,
-      "isPaid": true
+      "isPaid": true,
+      "id": "225d"
     }
   ]
 }

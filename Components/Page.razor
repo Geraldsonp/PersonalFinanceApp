@@ -1,6 +1,6 @@
 @if (PageTitle != null)
 {
-    <div class="flex justify-between pb-4">
+    <div class="flex justify-between pb-4 transition-opacity duration-1000 @(LoadingClass)">
         <h1 class="text-32 font-bold">@PageTitle</h1>
         @if (Actions != null)
         {
@@ -10,7 +10,7 @@
         }
     </div>
 }
-<div class="w-full flex justify-center mb-8 md:mb-auto">
+<div class="w-full flex  mb-8 md:mb-auto  transition-opacity duration-1000 @(LoadingClass)">
     @if (ChildContent != null)
     {
         @ChildContent
@@ -23,4 +23,18 @@
     [Parameter]
     public RenderFragment? Actions { get; set; }
     [Parameter] public string? PageTitle { get; set; }
+    private bool IsLoading { get; set; } = true;
+
+    private string LoadingClass => IsLoading ? "opacity-0" : "opacity-100";
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            IsLoading = false;
+            Console.WriteLine("After render");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }

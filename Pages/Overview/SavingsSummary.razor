@@ -1,0 +1,33 @@
+@using PersonalFinanceApp.Pages.Budgets
+@using PersonalFinanceApp.Pages.Savings
+<div class="flex flex-col gap-4">
+    <div class="flex justify-between ">
+        <h4 class="sumary-title">Pots</h4>
+        <a class="text-grey-500">View All </a>
+    </div>
+
+    <div class="bg-beige-100 p-4 rounded-xl flex gap-4 items-center shrink-0 grow-0">
+        <IconComponent Icon="Icons.PiggyBank" Heigth="60" Width="60" Class=" text-green"></IconComponent>
+        <div class="flex flex-col gap-4">
+            <p class="text-gray-500">Total Saved</p>
+            <p class="text-4xl font-bold">$@Balance.ToString("F2")</p>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 grid-rows-2 gap-y-5 ">
+
+        @foreach (var pot in TopPots)
+        {
+            <div class="border-l-8 rounded pl-5 pt-2 flex flex-col gap-3" style="border-color: @pot.Theme">
+                <p>@pot.Name</p>
+                <p class="font-bold text-2xl">$@pot.Total</p>
+            </div>
+        }
+
+    </div>
+</div>
+
+@code {
+    [Parameter] public IEnumerable<Pot> Pots { get; set; } = new List<Pot>();
+    private IEnumerable<Pot> TopPots => Pots.OrderBy(p => p.Total).Take(4);
+    private decimal Balance => Pots.Sum(p => p.Total);
+}

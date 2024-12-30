@@ -1,16 +1,53 @@
 ﻿@page "/overview"
-@using PersonalFinanceApp.Pages.Savings
-<h3>Overview</h3>
+@inject IBudgetService BudgetService;
+@inject IPotsService SavingsService;
 
-<SavingPotCard Pot="@Pot"></SavingPotCard>
+<Page PageTitle="Overview">
+    <div class="flex flex-col gap-4 w-full">
+        <div class="flex gap-4 w-full flex-col md:flex-row">
+            <Card Class="card-dark">
+                <h4 class="mb-4">Current Balance</h4>
+                <p class="text-3xl font-bold">$@Balance.ToString("F2")</p>
+            </Card>
+            <Card>
+                <h4 class="mb-4">Income</h4>
+                <p class="text-3xl font-bold">$@Balance.ToString("F2")</p>
+            </Card>
+            <Card>
+                <h4 class="mb-4">Expenses</h4>
+                <p class="text-3xl font-bold">$@Balance.ToString("F2")</p>
+            </Card>
+        </div>
+        <div class="flex gap-4 w-full flex-col  md:flex-row">
+            <div class="flex flex-col gap-4 w-full">
+                <Card>
+                    <SavingsSummary Pots="Pots" ></SavingsSummary>
+                </Card>
+                <Card>
+                    <h4 class="mb-4">Transactions</h4>
+                </Card>
+            </div>
+            <div class="flex flex-col gap-4 w-full">
+                 <Card>
+                    <h4 class="mb-4">Budget</h4>
+                </Card>
+                <Card>
+                    <h4 class="mb-4">Recurring Bills</h4>
+                </Card>
+            </div>
+        </div>
+    </div>
+
+</Page>
+
 @code {
-    private Pot Pot { get; set; } = new Pot()
-        {
-            Id = "1",
-            Name = "Savings",
-            Target = 2000,
-            Total = 459,
-            Theme = "#277C78"
-        };
+    private decimal Balance => 1234.56m;
+    private IEnumerable<Pot> Pots = new List<Pot>();
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        Pots = await SavingsService.GetAsync();
+        await base.OnInitializedAsync();
+    }
 
 }

@@ -1,6 +1,6 @@
 ﻿namespace PersonalFinanceApp.Pages.Savings;
 
-public enum TransactionType
+public enum MovementType
 {
     Add,
     Withdraw

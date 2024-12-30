@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Watch Css",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "watch-css"],
+            "skipFiles": ["<node_internals>/**"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Fake Server",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "fake-server"],
+            "skipFiles": ["<node_internals>/**"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": ".NET Core Watch",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "dotnet",
+            "args": ["watch", "run"],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack",
+            "configurations": ["Watch Css", "Launch Fake Server", ".NET Core Watch"]
+        }
+    ]
+}

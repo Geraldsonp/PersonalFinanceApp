@@ -1,8 +1,9 @@
 using System;
+using PersonalFinanceApp.Models;
 
 namespace PersonalFinanceApp.Pages.Savings;
 
-public class Pot
+public class Pot : IHasId
 {
     public string Name { get; set; }
     public int Target { get; set; }
